@@ -16,7 +16,7 @@ const nextConfig = {
   compiler: {
     styledComponents: true, // styled-components 서버 사이드 렌더링 지원
   },
-  output: 'export',
+  // output: 'export',
   productionBrowserSourceMaps: true,
 };
 
