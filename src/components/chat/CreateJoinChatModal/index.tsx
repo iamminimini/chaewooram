@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import DialogComponent from '@/components/common/DialogComponent';
-import { ModalType } from '@/app/chat/chatType';
+import { ModalType } from '@/types/chat';
 import { Button, TextField } from '@mui/material';
 import { styled } from 'styled-components';
 import ProfileSelector from '../ProfileSelector';
