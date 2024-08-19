@@ -19,7 +19,6 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      1234
       <ThemeProvider theme={theme}>
         <body className={pretendard.className}>
           <ReactQueryProviders>
