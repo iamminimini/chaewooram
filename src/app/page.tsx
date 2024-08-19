@@ -12,6 +12,7 @@ export default function Home() {
 
 const Container = styled.div`
   width: 100%;
+  background-color: red;
 `;
 
 const Section = styled.div<{ $bgColor?: string; $customPadding?: string }>`

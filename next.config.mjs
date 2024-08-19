@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
-  swcMinify: true,
+  reactStrictMode: true, // 개발 중 오류 감지 및 코드 품질 향상을 위해 활성화
+  swcMinify: true, // SWC를 사용한 코드 미니파이
   images: {
     remotePatterns: [
       {
@@ -13,7 +13,7 @@ const nextConfig = {
     ],
   },
   compiler: {
-    styledComponents: true,
+    styledComponents: true, // styled-components 서버 사이드 렌더링 지원
   },
 };
 
