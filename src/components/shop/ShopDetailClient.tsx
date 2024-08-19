@@ -1,7 +1,7 @@
 'use client';
 
 import { Fragment, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useRecoilState } from 'recoil';
 import { favoritesState } from '@/recoil/favorites/atom';
 import Loading from '@/components/common/Loading';
@@ -16,10 +16,11 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import { Box, Button, Divider, IconButton } from '@mui/material';
 import { styled } from 'styled-components';
 
-function ShopDetailClient({ id }) {
+function ShopDetailClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { data, refetch, isFetching } = useGetRijksMuseumItem(id);
+  const { id } = useParams();
+  const { data, refetch, isFetching } = useGetRijksMuseumItem(id as string);
   const [isShowModal, setIsShowModal] = useState(false);
   const [favorites, setFavorites] = useRecoilState(favoritesState);
 
