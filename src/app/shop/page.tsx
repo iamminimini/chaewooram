@@ -43,7 +43,7 @@ function Shop() {
   /**  상세 페이지 이동 */
   const handleNavigateToDetail = (objectNumber: string) => {
     if (!objectNumber) return;
-    router.push(`/shop/${objectNumber}?scrollPosition=${appCardLayoutWrapperRef.current.scrollTop}`);
+    router.push(`/shop/detail?id=${objectNumber}&scrollPosition=${appCardLayoutWrapperRef.current.scrollTop}`);
   };
 
   /** 리스트페이지 재진입시 스크롤 위치 복원 */

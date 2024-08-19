@@ -1,7 +1,7 @@
 'use client';
 
 import { Fragment, useEffect, useState } from 'react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useRecoilState } from 'recoil';
 import { favoritesState } from '@/recoil/favorites/atom';
 import Loading from '@/components/common/Loading';
@@ -19,7 +19,7 @@ import { styled } from 'styled-components';
 function ShopDetailClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { id } = useParams();
+  const id = searchParams.get('id');
   const { data, refetch, isFetching } = useGetRijksMuseumItem(id as string);
   const [isShowModal, setIsShowModal] = useState(false);
   const [favorites, setFavorites] = useRecoilState(favoritesState);

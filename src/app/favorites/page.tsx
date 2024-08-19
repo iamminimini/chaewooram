@@ -14,7 +14,7 @@ const Favorites = () => {
 
   /** 구매문의 페이지 이동 */
   const handleNavigateToDetailPage = (id: string) => {
-    router.push(`/shop/${id}`);
+    router.push(`/shop/detail?id=${id}`);
   };
 
   /** 즐겨찾기 전체 삭제 */
