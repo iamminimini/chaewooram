@@ -16,6 +16,7 @@ const nextConfig = {
     styledComponents: true, // styled-components 서버 사이드 렌더링 지원
   },
   output: 'export',
+  productionBrowserSourceMaps: true,
 };
 
 export default nextConfig;
