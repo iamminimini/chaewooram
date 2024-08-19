@@ -7,7 +7,7 @@ import { useAnimationInView } from '@/hooks/useAnimationInView';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Button } from '@mui/material';
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Banner4 = () => {
   const router = useRouter();
@@ -38,10 +38,7 @@ export const Banner4 = () => {
     <Banner4Container>
       <AnimatedText ref={textRef} getAnimationProps={getAnimationProps}>
         <AnimatedTitle>GALLERY BOOK</AnimatedTitle>
-        <AnimatedSubtitle>
-          "최고의 작품과 예술가들의 이야기를 담은 <br />
-          갤러리 북을 만나보세요."
-        </AnimatedSubtitle>
+        <AnimatedSubtitle>"최고의 작품과 예술가들의 이야기를 담은 갤러리 북을 만나보세요."</AnimatedSubtitle>
         <AnimatedDescription>
           GALLERY BOOK은 우리의 전시회와 컬렉션을 집에서도 편안하게 즐길 수 있는 기회를 제공합니다.
           <br />
@@ -75,7 +72,6 @@ export const Banner4 = () => {
 };
 
 const Banner4Container = styled.div`
-  /* background: url('/images/bannerBg2.png') center/cover no-repeat; */
   padding: 80px 10%;
   display: flex;
   flex-direction: column;
@@ -98,61 +94,87 @@ const AnimatedTitle = styled(motion.h1)`
 `;
 
 const AnimatedSubtitle = styled(motion.p)`
-  font-size: 30px;
-  margin-bottom: 20px;
-  font-weight: bold;
-  position: relative;
-  color: transparent;
-  background: linear-gradient(135deg, #f9d423, #e0aaff, #b09adb, #9c89b8, #cfc4e0);
-  background-clip: text;
-  -webkit-background-clip: text;
-  border: 2px solid transparent;
-  background-size: 300% 300%;
-  animation: gradientAnimation 7s ease infinite;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      font-size: 30px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      position: relative;
+      color: transparent;
+      background: linear-gradient(135deg, #f9d423, #e0aaff, #b09adb, #9c89b8, #cfc4e0);
+      background-clip: text;
+      -webkit-background-clip: text;
+      border: 2px solid transparent;
+      background-size: 300% 300%;
+      animation: gradientAnimation 7s ease infinite;
 
-  @keyframes gradientAnimation {
-    0% {
-      background-position: 0% 0%;
-    }
-    50% {
-      background-position: 100% 100%;
-    }
-    100% {
-      background-position: 0% 0%;
-    }
-  }
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 0%;
+        }
+        50% {
+          background-position: 100% 100%;
+        }
+        100% {
+          background-position: 0% 0%;
+        }
+      }
+      ${media.tablet} {
+        font-size: 26px;
+        word-break: keep-all;
+      }
+    `;
+  }}
 `;
 
 const AnimatedDescription = styled(motion.p)`
-  font-size: 18px;
-  margin-bottom: 40px;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      font-size: 18px;
+      margin-bottom: 40px;
+      ${media.tablet} {
+        text-align: center;
+        font-size: 16px;
+      }
+    `;
+  }}
 `;
-
 const ContentWrapper = styled.div`
   width: 100vw;
   overflow: hidden;
 `;
 
 const Slide = styled.ul`
-  height: 100%;
-  width: 4200px; // 이미지 + 여백 너비 (350 * 12)
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 50px;
-  animation: autoPlay 10s linear infinite;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      height: 100%;
+      width: 4200px; // 이미지 + 여백 너비 (350 * 12)
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 50px;
+      animation: autoPlay 10s linear infinite;
 
-  @keyframes autoPlay {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
+      @keyframes autoPlay {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
 
-  &:hover {
-    animation-play-state: paused;
-  }
+      &:hover {
+        animation-play-state: paused;
+      }
+      ${media.tablet} {
+        width: 3600px; // 이미지 + 여백 너비 (300 * 12)
+        gap: 0px;
+      }
+    `;
+  }}
 `;
 
 const SlideItem = styled.li`

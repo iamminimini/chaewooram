@@ -74,7 +74,7 @@ const BackgroundVideo = styled.video`
 const Content = styled.div`
   position: relative;
   z-index: 1;
-  width: 500px;
+  max-width: 500px;
   margin: auto;
   display: flex;
   flex-direction: column;

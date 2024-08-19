@@ -1,59 +1,55 @@
 import { useRouter } from 'next/navigation';
-import { ellipsisTextStyle } from '@/styles/common';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Card, CardContent, Grid, IconButton } from '@mui/material';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const ListItemContent = ({ item, handleNavigateToDetail }) => {
   const router = useRouter();
 
   return (
-    <Grid item xs={12} sm={6}>
-      <ListItem onClick={() => handleNavigateToDetail(item.objectNumber)}>
-        <CardContentStyled>
-          <ItemHeader>
-            <Title>{item.title}</Title>
-            <SubTitle>{item.longTitle}</SubTitle>
-          </ItemHeader>
-        </CardContentStyled>
-        {item.webImage?.url ? (
-          <ImageWrapper>
-            <Image src={item.webImage.url} alt={item.title} />
-          </ImageWrapper>
-        ) : (
-          <NoImage>No image available</NoImage>
-        )}
-        <LikeButton className="like-button">
-          <IconButton aria-label="like" size="small" color="secondary">
-            <FavoriteBorderIcon />
-            <FavoriteIcon />
-          </IconButton>
-        </LikeButton>
-      </ListItem>
-    </Grid>
+    <CardItem onClick={() => handleNavigateToDetail(item.objectNumber)}>
+      <ItemHeader>
+        <Title>{item.title}</Title>
+        <SubTitle>{item.longTitle}</SubTitle>
+      </ItemHeader>
+      {item.webImage?.url ? (
+        <ImageWrapper>
+          <Image src={item.webImage.url} alt={item.title} />
+        </ImageWrapper>
+      ) : (
+        <NoImage>No image available</NoImage>
+      )}
+    </CardItem>
   );
 };
 
 export default ListItemContent;
 
-const CardContentStyled = styled(CardContent)`
-  flex-shrink: 0;
-`;
-
-const ListItem = styled(Card)`
-  height: 100%;
+const CardItem = styled.div`
+  width: calc(50% - 20px);
+  padding: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0px;
-  cursor: pointer;
-  position: relative;
+
+  &:hover {
+    background-color: #000;
+    color: #ededed;
+  }
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.tablet} {
+        width: 100%;
+      }
+    `;
+  }}
 `;
 
 const ImageWrapper = styled.div`
   width: 100%;
-  height: 250px;
+  height: 200px; /* 이미지의 고정 높이 설정 */
   overflow: hidden;
   position: relative;
 `;
@@ -80,13 +76,12 @@ const NoImage = styled.div`
 `;
 
 const ItemHeader = styled.div`
-  width: 100%;
+  margin-bottom: 12px; /* 제목과 서브 제목 사이의 간격 설정 */
 `;
 
 const Title = styled.div`
   font-size: 18px;
   font-weight: 700;
-  ${ellipsisTextStyle}
   margin-bottom: 8px;
 `;
 
@@ -94,14 +89,4 @@ const SubTitle = styled.div`
   font-size: 13px;
   line-height: 1.1;
   color: #777;
-  ${ellipsisTextStyle}
-`;
-
-const LikeButton = styled.div`
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  color: white;
-  opacity: 0;
-  transition: opacity 0.3s ease;
 `;

@@ -77,7 +77,7 @@ const Login = () => {
             boxShadow="0px 1px 4px rgba(0, 0, 0, 0.1)"
             onClick={() => handleOAuthSignIn('google')}
           >
-            <Image src={'/images/google-icon.png'} width={28} height={28} alt="google icon" />
+            <Image src={'/images/google_icon.png'} width={28} height={28} alt="google icon" />
             구글로 로그인
           </SocialLoginButton>
           <SocialLoginButton
@@ -85,7 +85,7 @@ const Login = () => {
             boxShadow="0px 1px 4px rgba(0, 0, 0, 0.1)"
             onClick={() => handleOAuthSignIn('kakao')}
           >
-            <Image src={'/images/kakao-icon.png'} width={21} height={22} alt="kakao icon" />
+            <Image src={'/images/kakao_icon.png'} width={21} height={22} alt="kakao icon" />
             카카오톡 로그인
           </SocialLoginButton>
         </ButtonGroup>

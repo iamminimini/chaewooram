@@ -6,9 +6,8 @@ import Container from '@/components/common/Container';
 import ListItemContent from '@/components/shop/ListItemContent';
 import ShopSkeleton from '@/components/skeleton/ShopSkeleton';
 import { useGetRijksMuseum } from '@/api/openApi/openApii.query';
-import { Grid } from '@mui/material';
 import { throttle } from 'lodash';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 function Shop() {
   const router = useRouter();
@@ -57,7 +56,7 @@ function Shop() {
   return (
     <Container title={'Shop'}>
       <Contents ref={appCardLayoutWrapperRef}>
-        <Grid container spacing={2}>
+        <CardList>
           {data?.map((page, pageIndex) => (
             <Fragment key={pageIndex}>
               {page.artObjects.map((item) => (
@@ -66,7 +65,7 @@ function Shop() {
             </Fragment>
           ))}
           {(isLoading || isFetchingNextPage) && <ShopSkeleton />}
-        </Grid>
+        </CardList>
       </Contents>
     </Container>
   );
@@ -78,4 +77,17 @@ const Contents = styled.div`
   width: 100%;
   height: 100vh;
   overflow-y: auto;
+`;
+
+const CardList = styled.div`
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      gap: 16px;
+    `;
+  }}
 `;

@@ -1,10 +1,12 @@
 'use client';
 
+import { media } from '@/const/media';
 import { createTheme } from '@mui/material/styles';
+import { DefaultTheme } from 'styled-components';
 import { pretendard } from './localFonts.fonts';
 
 // 테마를 설정합니다.
-const theme = createTheme({
+const muiTheme = createTheme({
   typography: {
     fontFamily: pretendard.style.fontFamily,
     fontSize: 14,
@@ -19,5 +21,10 @@ const theme = createTheme({
     },
   },
 });
+
+const theme: DefaultTheme = {
+  ...muiTheme,
+  media: media,
+};
 
 export default theme;

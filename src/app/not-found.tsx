@@ -1,5 +1,6 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import Lottie from 'react-lottie-player';
 import Link from 'next/link';
 import notFound from 'public/json/notFound.json';
@@ -16,7 +17,7 @@ export default function NotFound() {
         </Text>
         <StyleLink href="/">홈으로 돌아가기</StyleLink>
       </TextWrapper>
-      <StyleLottie loop animationData={notFound} play />
+      {!isMobile && <StyleLottie loop animationData={notFound} play />}
     </Container>
   );
 }
@@ -38,11 +39,16 @@ const Container = styled.div`
 
 const TextWrapper = styled.div`
   ${({ theme }) => {
-    const { colors } = theme;
+    const { colors, media } = theme;
     return css`
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      ${media.tablet} {
+        align-items: center;
+        text-align: center;
+        line-height: 1;
+      }
     `;
   }}
 `;
@@ -53,6 +59,7 @@ const Text = styled.div`
     return css`
       font-size: 17px;
       letter-spacing: -1px;
+      white-space: nowrap;
     `;
   }}
 `;

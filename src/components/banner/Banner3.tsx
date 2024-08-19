@@ -1,12 +1,13 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import { useRouter } from 'next/navigation';
 import { AnimatedText } from '@/components/animatedText/animatedText';
 import { useAnimationInView } from '@/hooks/useAnimationInView';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Button } from '@mui/material';
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Banner3 = () => {
   const router = useRouter();
@@ -17,7 +18,7 @@ export const Banner3 = () => {
       <TextContent>
         <AnimatedText ref={textRef} getAnimationProps={getAnimationProps}>
           <AnimatedTitle>
-            GALLERY MARKETPLACE: <span>실시간 채팅으로 예술 거래를 새롭게</span>
+            GALLERY MARKETPLACE: {isMobile && <br />} <span>실시간 채팅으로 예술 거래를 새롭게</span>
           </AnimatedTitle>
           <AnimatedSubtitle>"예술 작품을 사고파는 새로운 방식을 경험해보세요."</AnimatedSubtitle>
           <AnimatedDescription>
@@ -48,29 +49,47 @@ export const Banner3 = () => {
 };
 
 const Banner3Container = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 0 auto;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      display: flex;
+      align-items: center;
+      margin: 0 auto;
+
+      ${media.tablet} {
+        flex-direction: column;
+      }
+    `;
+  }}
 `;
 
 const TextContent = styled.div`
-  width: 50%;
-  height: 1200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.5;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: 20px;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      width: 50%;
+      height: 1200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      line-height: 1.5;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 20px;
+      ${media.tablet} {
+        width: 100%;
+        height: 500px;
+        background: none;
+        text-align: center;
+      }
+    `;
+  }}
 `;
 
 const AnimatedTitle = styled(motion.h1)`
   color: #2a2a2a;
   font-size: 22px;
   font-weight: bold;
-  margin-bottom: 20px;
-
   & span {
     font-weight: normal;
     font-size: 18px;
@@ -78,64 +97,96 @@ const AnimatedTitle = styled(motion.h1)`
 `;
 
 const AnimatedSubtitle = styled(motion.p)`
-  font-size: 28px;
-  font-weight: bold;
-  position: relative;
-  padding: 10px 20px;
-  color: transparent;
-  background: linear-gradient(135deg, #f9d423, #e0aaff, #b09adb, #9c89b8, #cfc4e0);
-  background-clip: text;
-  -webkit-background-clip: text;
-  border: 2px solid transparent;
-  background-size: 300% 300%;
-  animation: gradientAnimation 7s ease infinite;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      font-size: 28px;
+      font-weight: bold;
+      position: relative;
+      padding: 20px 0px;
+      color: transparent;
+      background: linear-gradient(135deg, #f9d423, #e0aaff, #b09adb, #9c89b8, #cfc4e0);
+      background-clip: text;
+      -webkit-background-clip: text;
+      border: 2px solid transparent;
+      background-size: 300% 300%;
+      animation: gradientAnimation 7s ease infinite;
 
-  @keyframes gradientAnimation {
-    0% {
-      background-position: 0% 0%;
-    }
-    50% {
-      background-position: 100% 100%;
-    }
-    100% {
-      background-position: 0% 0%;
-    }
-  }
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 0%;
+        }
+        50% {
+          background-position: 100% 100%;
+        }
+        100% {
+          background-position: 0% 0%;
+        }
+      }
+
+      ${media.tablet} {
+        font-size: 26px;
+      }
+    `;
+  }}
 `;
-
 const AnimatedDescription = styled(motion.p)`
-  color: #2a2a2a;
-  font-size: 18px;
-  text-align: right;
-  line-height: 1.5;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      color: #2a2a2a;
+      font-size: 18px;
+      text-align: right;
+      line-height: 1.5;
+      ${media.tablet} {
+        text-align: center;
+        font-size: 16px;
+      }
+    `;
+  }}
 `;
 
 const VideoWrapper = styled.div`
-  width: 50%;
-  height: 1200px;
-  display: flex;
-  justify-content: center;
-  background-size: auto;
-  background-position: center;
-  background-image: url('/images/main_banner_bg.png');
-  position: relative;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      width: 50%;
+      height: 1200px;
+      display: flex;
+      justify-content: center;
+      background-size: auto;
+      background-position: center;
+      background-image: url('/images/main_banner_bg.png');
+      background-repeat: no-repeat; /* 추가된 부분 */
+      position: relative;
+
+      ${media.tablet} {
+        width: 100%;
+        height: 600px;
+        background-image: url('/images/main_banner_mobile_bg.png');
+      }
+    `;
+  }}
 `;
 
 const Video = styled.video`
-  width: 450px;
-  height: auto;
-  position: absolute;
-  top: 53%;
-  left: 52%;
-  transform: translate(-50%, -50%);
-
-  @media (max-width: 768px) {
-    width: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      width: 450px;
+      height: auto;
+      position: absolute;
+      top: 53%;
+      left: 52%;
+      transform: translate(-50%, -50%);
+      ${media.tablet} {
+        width: 330px;
+        left: 51.5%;
+        top: 42%;
+      }
+    `;
+  }}
 `;
-
 const ChatButtonWrapper = styled.div`
   margin-top: 50px;
 `;

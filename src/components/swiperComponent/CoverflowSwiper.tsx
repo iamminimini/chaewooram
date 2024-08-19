@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { isMobile } from 'react-device-detect';
+import styled, { css } from 'styled-components';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
@@ -15,7 +16,7 @@ const CoverflowSwiper = ({ data }: CoverflowSwiperProps) => {
       effect={'coverflow'}
       grabCursor={true}
       centeredSlides={true}
-      slidesPerView={3}
+      slidesPerView={isMobile ? 1 : 3}
       loop={true}
       autoplay={{
         delay: 1500,
@@ -40,19 +41,28 @@ const CoverflowSwiper = ({ data }: CoverflowSwiperProps) => {
 export default CoverflowSwiper;
 
 const SwiperContainer = styled(Swiper)`
-  width: 100vw;
-  padding: 120px 0px;
-  margin-bottom: 50px;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      width: 100vw;
+      padding: 120px 0px;
+      margin-bottom: 50px;
 
-  & .swiper-pagination {
-    .swiper-pagination-bullet-active {
-      background-color: ${(props) => props.theme.palette.secondary.main};
-    }
-  }
-  & .swiper-slide-active {
-    transform: scale(1.4) !important; /* 활성화된 슬라이드 두 배 크기로 설정 */
-    transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
-  }
+      & .swiper-pagination {
+        .swiper-pagination-bullet-active {
+          background-color: ${(props) => props.theme.palette.secondary.main};
+        }
+      }
+      & .swiper-slide-active {
+        transform: scale(1.4) !important; /* 활성화된 슬라이드 두 배 크기로 설정 */
+        transition: transform 0.3s ease; /* 변환 애니메이션 추가 */
+      }
+
+      ${media.tablet} {
+        width: calc(100vw - 24px);
+      }
+    `;
+  }}
 `;
 
 const SwiperSlideWrapper = styled(SwiperSlide)`

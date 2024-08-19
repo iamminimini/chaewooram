@@ -3,7 +3,7 @@
 import { AnimatedText } from '@/components/animatedText/animatedText';
 import { useAnimationInView } from '@/hooks/useAnimationInView';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const cards = [
   {
@@ -38,10 +38,10 @@ export const Banner1 = () => {
   const { ref: textRef, getAnimationProps } = useAnimationInView();
 
   return (
-    <>
+    <Container>
       <AnimatedText ref={textRef} getAnimationProps={getAnimationProps}>
         <TitleWrapper>
-          <AnimatedImage src={'/images/logoText.png'} alt={'chaewooram logo image'} width={300} height={40} />
+          <AnimatedImage src={'/images/text_logo.png'} alt={'chaewooram logo image'} width={300} height={40} />
           <AnimatedTitle>채우람에서 예술과 함께하는 순간을 경험하세요</AnimatedTitle>
         </TitleWrapper>
       </AnimatedText>
@@ -65,10 +65,21 @@ export const Banner1 = () => {
           </CardList>
         </Banner1Wrapper>
       </Banner1Container>
-      <div style={{ height: '10vh' }}></div>
-    </>
+    </Container>
   );
 };
+
+const Container = styled(motion.div)`
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      padding: 100px 0;
+      ${media.tablet} {
+        padding: 0px;
+      }
+    `;
+  }}
+`;
 
 const TitleWrapper = styled(motion.div)`
   padding: 100px 0;
@@ -80,10 +91,20 @@ const TitleWrapper = styled(motion.div)`
 `;
 
 const AnimatedTitle = styled(motion.h1)`
-  color: #2a2a2a;
-  font-size: 30px;
-  font-weight: bold;
-  text-align: center;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      color: #2a2a2a;
+      font-size: 30px;
+      font-weight: bold;
+      text-align: center;
+      ${media.tablet} {
+        font-size: 26px;
+        line-height: 1.5;
+        word-break: keep-all;
+      }
+    `;
+  }}
 `;
 
 const AnimatedImage = styled(motion.img)`
@@ -91,31 +112,66 @@ const AnimatedImage = styled(motion.img)`
 `;
 
 const Banner1Container = styled.div`
-  width: 1200px;
-  margin: 0 auto;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      ${media.tablet} {
+        overflow: hidden;
+      }
+    `;
+  }}
 `;
 
 const FrameImage = styled.img`
-  width: 100%;
-  height: auto;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      width: 100%;
+      height: auto;
+      ${media.tablet} {
+        visibility: hidden;
+        height: 600px;
+      }
+    `;
+  }}
 `;
 
 const Banner1Wrapper = styled(motion.div)`
-  position: sticky;
-  top: 100px;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      position: sticky;
+      top: 100px;
+      ${media.tablet} {
+        top: 0px;
+      }
+    `;
+  }}
 `;
 
 const CardList = styled.ul`
-  position: absolute;
-  top: 31.5%;
-  left: 50.5%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  width: 53%;
-  height: 27.5%;
-  transform: translate(-50%, -50%);
-  list-style-type: none;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      position: absolute;
+      top: 31.5%;
+      left: 50.5%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 53%;
+      height: 27.5%;
+      transform: translate(-50%, -50%);
+      list-style-type: none;
+      ${media.tablet} {
+        width: 100%;
+        height: 200px;
+      }
+    `;
+  }}
 `;
 
 const CardItem = styled(motion.li)`

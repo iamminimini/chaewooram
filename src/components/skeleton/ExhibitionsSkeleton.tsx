@@ -1,5 +1,5 @@
 import { Box, Divider, Skeleton } from '@mui/material';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const ExhibitionsSkeleton = () => {
   return (
@@ -25,12 +25,22 @@ const ExhibitionsSkeleton = () => {
 export default ExhibitionsSkeleton;
 
 const ListItem = styled.li`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 0;
-  border-bottom: 1px solid #ededed;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 0;
+      border-bottom: 1px solid #ededed;
+      ${media.tablet} {
+        font-size: 26px;
+        word-break: keep-all;
+        flex-direction: column;
+      }
+    `;
+  }}
 `;
 
 const Content = styled.div`

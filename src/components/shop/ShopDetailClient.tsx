@@ -14,7 +14,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import { Box, Button, Divider, IconButton } from '@mui/material';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 function ShopDetailClient() {
   const router = useRouter();
@@ -143,13 +143,24 @@ function ShopDetailClient() {
 export default ShopDetailClient;
 
 const ContentsWrapper = styled.div`
-  width: 100%;
-  height: auto;
-  position: absolute;
-  bottom: 0;
-  color: white;
-  background-color: transparent; /* 기본 배경색을 투명으로 설정 */
-  transition: background-color 0.3s ease; /* 배경색 변경 시 부드러운 전환 효과 */
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      width: 100%;
+      height: auto;
+      position: absolute;
+      bottom: 0;
+      color: white;
+      background-color: transparent; /* 기본 배경색을 투명으로 설정 */
+      transition: background-color 0.3s ease; /* 배경색 변경 시 부드러운 전환 효과 */
+
+      ${media.tablet} {
+        position: relative;
+        background-color: #000;
+        margin-top: -100px;
+      }
+    `;
+  }}
 `;
 
 const Container = styled.div`
@@ -183,8 +194,17 @@ const Image = styled.img`
 `;
 
 const Title = styled.div`
-  font-size: 30px;
-  font-weight: 700;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1.3;
+      ${media.tablet} {
+        font-size: 22px;
+      }
+    `;
+  }}
 `;
 
 const SubTitle = styled.div`
@@ -199,17 +219,36 @@ const Disc = styled.div`
 `;
 
 const Contents = styled.div`
-  width: 100%;
-  max-width: 1024px;
-  padding: 30px;
-  margin: auto;
-  display: flex;
-  gap: 30px;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      width: 100%;
+      max-width: 1024px;
+      padding: 30px;
+      margin: auto;
+      display: flex;
+      gap: 30px;
+      ${media.tablet} {
+        flex-direction: column;
+        gap: 20px;
+      }
+    `;
+  }}
 `;
 
 const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+
+      ${media.tablet} {
+        gap: 20px;
+        align-items: center;
+      }
+    `;
+  }}
 `;

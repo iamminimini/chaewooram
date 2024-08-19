@@ -1,20 +1,38 @@
 import { motion } from 'framer-motion';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 const TextWrapper = styled(motion.div)`
-  display: flex;
-  width: 50%;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.5;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      display: flex;
+      width: 50%;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.5;
+      ${media.tablet} {
+        width: 100%;
+      }
+    `;
+  }}
 `;
 
 const Section = styled.div`
-  max-width: 1024px;
-  display: flex;
-  gap: 30px;
-  padding: 50px 0 150px;
-  margin: auto;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      max-width: 1024px;
+      display: flex;
+      gap: 30px;
+      padding: 50px 0 150px;
+      margin: auto;
+
+      ${media.tablet} {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+    `;
+  }}
 `;
 
 const AnimatedVideoWrapper = styled(motion.div)`

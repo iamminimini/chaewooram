@@ -27,12 +27,16 @@ export default Container;
 
 const StyledContainer = styled.div<{ $fullWidth: boolean; $customPadding: string }>`
   ${({ theme, $fullWidth = false, $customPadding = '50px 16px 0' }) => {
-    const { colors } = theme;
+    const { colors, media } = theme;
     return css`
       width: ${$fullWidth ? '100%' : '1024px'};
       min-height: calc(100vh - 100px);
       margin: 0 auto;
       padding: ${$customPadding};
+
+      ${media.tablet} {
+        width: 100%;
+      }
     `;
   }}
 `;

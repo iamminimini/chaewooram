@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -8,12 +9,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { favoritesState } from '@/recoil/favorites/atom';
 import { userState } from '@/recoil/user/atom';
 // import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
-import { Avatar, Badge, BadgeProps, Button, IconButton } from '@mui/material';
-import { AnimatePresence, motion } from 'framer-motion';
-import { styled } from 'styled-components';
-import { menuItems } from './HeaderData';
+import { Avatar, Badge, Button } from '@mui/material';
+import { css, styled } from 'styled-components';
+import HeaderMenu from './HeaderMenu';
+import MobileHeaderMenu from './MobileHeaderMenu';
 import ProfileModal from './ProfileModal';
 
 export const Header = () => {
@@ -73,6 +73,11 @@ export const Header = () => {
       setNavListWidth(navListRef.current.clientWidth);
     }
   }, [navListRef.current]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
 
   return (
     <>
@@ -81,56 +86,15 @@ export const Header = () => {
         <NavLink href="/">
           <Image src={'/images/favicon.png'} alt={'search icon'} width={100} height={30} />
         </NavLink>
+        {/* 메뉴 버튼 */}
+        {!isMobile && <HeaderMenu />}
 
         {/* 메뉴 */}
-        <NavWrapper>
-          <nav>
-            <NavList ref={navListRef}>
-              {menuItems?.map((item) => (
-                <NavItem key={item.id} onMouseEnter={() => handleMouseEnter(item.id)}>
-                  <NavLink href={item.href} onClick={handleMouseLeave}>
-                    {item.label} {item.submenu?.length > 0 && <KeyboardArrowDownIcon />}
-                  </NavLink>
-                  <AnimatePresence>
-                    {activeItemId === item.id && isHover && item.submenu?.length && (
-                      <MotionSubMenu
-                        initial={isActive ? 'enter' : 'exit'}
-                        animate="enter"
-                        exit="exit"
-                        variants={subMenuAnimate}
-                      >
-                        <SubMenuItemWrapper width={navListWidth}>
-                          {item.submenu?.map((subItem, subItemIdex: number) => (
-                            <SubMenuItem key={subItemIdex}>
-                              {Object.entries(subItem)?.map(([subItemKey, subItemList], subItemListIndex) => (
-                                <SubMenuItemList key={subItemListIndex}>
-                                  <h4>{subItemKey}</h4>
-                                  {subItemList?.map((subItemListItem, subItemListItemIndex) => (
-                                    <SubMenuItemListItem key={subItemListItemIndex} href={subItemListItem.href}>
-                                      {subItemListItem.label}
-                                    </SubMenuItemListItem>
-                                  ))}
-                                </SubMenuItemList>
-                              ))}
-                            </SubMenuItem>
-                          ))}
-                        </SubMenuItemWrapper>
-                      </MotionSubMenu>
-                    )}
-                  </AnimatePresence>
-                </NavItem>
-              ))}
-            </NavList>
-          </nav>
-        </NavWrapper>
-
         <RightWrapper>
           {/* 장바구니 */}
-          <IconButton aria-label="cart" onClick={handleFavorites}>
-            <Badge color="error" badgeContent={favorites?.length}>
-              <ThumbUpAltOutlinedIcon color="secondary" />
-            </Badge>
-          </IconButton>
+          <Badge color="error" badgeContent={favorites?.length} onClick={handleFavorites}>
+            <ThumbUpAltOutlinedIcon color="secondary" />
+          </Badge>
 
           {/* 로그인 영역 */}
           {user?.id ? (
@@ -144,8 +108,12 @@ export const Header = () => {
               <ProfileModal open={modalOpen} onClose={() => setModalOpen(false)} />
             </>
           ) : (
-            <CustomButton href={'/login'}>LOGIN</CustomButton>
+            <>
+              <CustomButton href={'/login'}>LOGIN</CustomButton>
+            </>
           )}
+
+          {isMobile && <MobileHeaderMenu />}
         </RightWrapper>
       </HeaderContainer>
     </>
@@ -155,33 +123,25 @@ export const Header = () => {
 export default Header;
 
 const HeaderContainer = styled.header`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: black;
-  display: flex;
-  align-items: center;
-  height: 48px;
-  padding: 0 20px;
-  z-index: 10;
+  ${({ theme }) => {
+    const { colors, media } = theme;
+    return css`
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: black;
+      display: flex;
+      align-items: center;
+      height: 48px;
+      padding: 0 20px;
+      z-index: 10;
+      ${media.tablet} {
+        justify-content: space-between;
+      }
+    `;
+  }}
 `;
-
-const NavList = styled.ul`
-  display: flex;
-  flex-direction: row;
-  gap: 35px;
-  height: 48px;
-  align-items: center;
-`;
-
-const NavWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-`;
-
-const NavItem = styled.li``;
 
 const NavLink = styled(Link)`
   color: white;
@@ -197,37 +157,6 @@ const NavLink = styled(Link)`
   }
 `;
 
-const MotionSubMenu = styled(motion.ul)`
-  position: absolute;
-  top: 48px;
-  left: 0;
-  width: 100vw;
-  background: black;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  z-index: 10;
-  padding: 40px;
-`;
-
-const SubMenuItemWrapper = styled.div<{ width: number }>`
-  display: flex;
-  gap: 70px;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: ${({ width }) => width}px;
-`;
-
-const SubMenuItem = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  &:first-child > ul > a {
-    font-size: 24px;
-  }
-`;
-
 const SubMenuItemList = styled.ul`
   display: flex;
   flex-direction: column;
@@ -238,10 +167,6 @@ const SubMenuItemList = styled.ul`
     color: gray;
     margin-bottom: 10px;
   }
-`;
-
-const SubMenuItemListItem = styled(Link)`
-  padding: 5px 0;
 `;
 
 const RightWrapper = styled.div`
@@ -255,12 +180,3 @@ const CustomButton = styled(Button)`
     font-size: 13px;
   }
 `;
-
-const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-  '& .MuiBadge-badge': {
-    right: -3,
-    top: 13,
-    border: `2px solid ${theme.palette.background.paper}`,
-    padding: '0 4px',
-  },
-}));
