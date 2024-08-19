@@ -1,4 +1,8 @@
 import type { Metadata } from 'next';
+import AuthCheck from '@/components/authCheck';
+import { Footer } from '@/components/footer/Footer';
+import Header from '@/components/header/Header';
+import RecoilRootWrapper from '@/components/recoilRootWrapper/RecoilRootWrapper';
 import ReactQueryProviders from '@/hooks/useReactQuery';
 import Providers from '@/lib/Provider';
 import { pretendard } from '@/styles/localFonts.fonts';
@@ -22,11 +26,17 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <ThemeProvider theme={theme}>
         <body className={pretendard.className}>
           <ReactQueryProviders>
-            <Providers>
-              <div className={styles.container}>
-                <main className={styles.main}>{children}</main>
-              </div>
-            </Providers>
+            <RecoilRootWrapper>
+              <Providers>
+                <AuthCheck>
+                  <div className={styles.container}>
+                    <Header />
+                    <main className={styles.main}>{children}</main>
+                    <Footer />
+                  </div>
+                </AuthCheck>
+              </Providers>
+            </RecoilRootWrapper>
           </ReactQueryProviders>
         </body>
       </ThemeProvider>
