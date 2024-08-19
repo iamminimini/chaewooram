@@ -1,9 +1,13 @@
 import { memo, useEffect, useState } from 'react';
 import DialogComponent from '@/components/common/DialogComponent';
-import { ModalType } from '@/app/chat/chatType';
 import { Button, TextField } from '@mui/material';
 import { styled } from 'styled-components';
 import ProfileSelector from '../ProfileSelector';
+
+enum ModalType {
+  ROOM_CREATE = 'roomCreate', // 새로운 방 생성
+  ROOM_ENTRY = 'roomEntry', // 이미 있는 방 바로 입장
+}
 
 interface CreateJoinChatModalProps {
   modalType: ModalType;
