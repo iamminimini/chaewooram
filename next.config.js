@@ -1,5 +1,5 @@
 module.exports = {
-  reactStrictMode: true, // 개발 중 오류 감지 및 코드 품질 향상을 위해 활성화
+  reactStrictMode: false, // 개발 중 오류 감지 및 코드 품질 향상을 위해 활성화
   swcMinify: false, // SWC를 사용한 코드 미니파이
   images: {
     unoptimized: true,

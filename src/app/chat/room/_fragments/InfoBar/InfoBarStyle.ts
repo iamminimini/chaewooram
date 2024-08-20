@@ -38,14 +38,14 @@ export const MessageBox = styled.div<{ isSentByCurrentUser: boolean }>`
   max-width: 80%;
 `;
 
-export const MessageWrapper = styled.p`
+export const MessageWrapper = styled.div`
   display: inline-flex;
   align-items: flex-start;
   flex-direction: column;
   gap: 5px;
 `;
 
-export const SentText = styled.p<{ isSentByCurrentUser: boolean }>`
+export const SentText = styled.div<{ isSentByCurrentUser: boolean }>`
   display: flex;
   align-items: center;
   font-family: Helvetica;
@@ -56,7 +56,7 @@ export const SentText = styled.p<{ isSentByCurrentUser: boolean }>`
   font-size: 12px;
 `;
 
-export const MessageText = styled.p`
+export const MessageText = styled.div`
   width: 100%;
   letter-spacing: 0;
   float: left;

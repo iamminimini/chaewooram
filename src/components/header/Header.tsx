@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,12 +17,6 @@ import MobileHeaderMenu from './MobileHeaderMenu';
 import ProfileModal from './ProfileModal';
 
 export const Header = () => {
-  const [activeItemId, setActiveItemId] = useState<number | null>(null);
-  const [isHover, setIsHover] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-
-  const [navListWidth, setNavListWidth] = useState<number>(0);
-  const navListRef = useRef<HTMLUListElement>(null);
   const [modalOpen, setModalOpen] = useState(false); // 프로필 모달
 
   const favorites = useRecoilValue(favoritesState); // 즐겨찾기
@@ -30,58 +24,13 @@ export const Header = () => {
 
   const router = useRouter();
 
-  const handleMouseEnter = useCallback((index: number) => {
-    setActiveItemId(index);
-    setIsHover(true);
-    setTimeout(() => {
-      setIsActive(true);
-    }, 300);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setTimeout(() => {
-      setIsActive(false);
-      setIsHover(false);
-    }, 300);
-  }, []);
-
-  const subMenuAnimate = {
-    enter: {
-      visibility: 'visible' as const,
-      height: 'auto',
-      transition: {
-        duration: 0.1,
-        ease: 'easeInOut',
-      },
-    },
-    exit: {
-      visibility: 'hidden' as const,
-      height: 0,
-      transition: {
-        duration: 0.1,
-        ease: 'easeInOut',
-      },
-    },
-  };
-
   const handleFavorites = () => {
     router.push('/favorites');
   };
 
-  useEffect(() => {
-    if (navListRef.current) {
-      setNavListWidth(navListRef.current.clientWidth);
-    }
-  }, [navListRef.current]);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const handleMenuToggle = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
-
   return (
     <>
-      <HeaderContainer onMouseEnter={() => handleMouseEnter(null)} onMouseLeave={handleMouseLeave}>
+      <HeaderContainer>
         {/* 로고 */}
         <NavLink href="/">
           <Image src={'/images/favicon.png'} alt={'search icon'} width={100} height={30} />

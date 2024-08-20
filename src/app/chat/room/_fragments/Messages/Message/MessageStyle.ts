@@ -99,7 +99,7 @@ export const MessageBox = styled.div<MessagePropsType>`
 
 export const MessageWrapper = styled.div``;
 
-export const MessageBoxWrapper = styled.p`
+export const MessageBoxWrapper = styled.div`
   display: inline-flex;
   align-items: flex-end;
   flex-direction: row;
@@ -107,14 +107,14 @@ export const MessageBoxWrapper = styled.p`
   margin: 0;
 `;
 
-export const UserName = styled.p`
+export const UserName = styled.div`
   padding: 10px 0;
   font-size: 14px;
   letter-spacing: -0.3px;
   font-weight: 600;
 `;
 
-export const CreatedAtText = styled.p<MessagePropsType>`
+export const CreatedAtText = styled.div<MessagePropsType>`
   display: flex;
   align-items: center;
   color: #777;
@@ -124,7 +124,7 @@ export const CreatedAtText = styled.p<MessagePropsType>`
   letter-spacing: -0.3px;
 `;
 
-export const MessageText = styled.p`
+export const MessageText = styled.div`
   width: 100%;
   letter-spacing: 0;
   float: left;

@@ -133,7 +133,7 @@ const FrameImage = styled.img`
       height: auto;
       ${media.tablet} {
         visibility: hidden;
-        height: 600px;
+        height: 800px;
       }
     `;
   }}
@@ -168,6 +168,7 @@ const CardList = styled.ul`
       list-style-type: none;
       ${media.tablet} {
         width: 100%;
+        max-width: 400px;
         height: 200px;
       }
     `;

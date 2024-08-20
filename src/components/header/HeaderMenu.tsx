@@ -57,7 +57,7 @@ export const HeaderMenu = () => {
 
   return (
     <>
-      <NavWrapper>
+      <NavWrapper onMouseEnter={() => handleMouseEnter(null)} onMouseLeave={handleMouseLeave}>
         <nav>
           <NavList ref={navListRef}>
             {menuItems?.map((item) => (

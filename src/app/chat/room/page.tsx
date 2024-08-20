@@ -8,7 +8,7 @@ import Messages from './_fragments/Messages/Messages';
 import io from 'socket.io-client';
 import { styled } from 'styled-components';
 
-const ENDPOINT = 'http://localhost:5001';
+const ENDPOINT = 'https://abundant-natalie-quantum-front-10f3fe81.koyeb.app/';
 
 function Chat({ params }) {
   const searchParams = useSearchParams();
@@ -62,11 +62,10 @@ function Chat({ params }) {
     }
   }, [name, room]);
 
-  // 메시지 전송 함수
   const sendMessage = useCallback(
     (event: any) => {
       event.preventDefault();
-      if ((!!file || !!message) && socket) {
+      if ((file || message) && socket) {
         socket.emit('sendMessage', { message: message, file: file }, () => {
           setMessage('');
           setFile(null);
