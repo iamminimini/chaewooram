@@ -1,16 +1,23 @@
 module.exports = {
-  experimental: {
-    appDir: true,
-  },
-  reactStrictMode: true,
-  swcMinify: true,
+  reactStrictMode: true, // 개발 중 오류 감지 및 코드 품질 향상을 위해 활성화
+  swcMinify: false, // SWC를 사용한 코드 미니파이
   images: {
-    domains: ['example.com'],
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'nrs.harvard.edu',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
-  i18n: {
-    locales: ['en', 'fr', 'es'],
-    defaultLocale: 'en',
+  compiler: {
+    styledComponents: true, // styled-components 서버 사이드 렌더링 지원
   },
+  // output: 'export',
+  productionBrowserSourceMaps: true,
+  output: 'export',
   webpack(config) {
     // Modify the config as needed
     return config;
