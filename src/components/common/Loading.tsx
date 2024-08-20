@@ -1,6 +1,6 @@
 import Lottie from 'react-lottie-player';
+import loadingJson from 'public/json/loading.json';
 import styled from 'styled-components';
-import loadingJson from './loading.json';
 
 /**
  * Loading 컴포넌트는 로딩 애니메이션을 보여주는 역할을 합니다.

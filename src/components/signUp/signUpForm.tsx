@@ -27,6 +27,7 @@ const SignUpForm = ({
       component="form"
       onSubmit={handleSubmit}
       sx={{
+        width: 400,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'left',
@@ -76,10 +77,5 @@ const StyledTextField = styled(TextField)`
   }
   & .MuiInputLabel-outlined {
     color: #999;
-  }
-`;
-
-const StyledButton = styled(Button)`
-  &.MuiButtonBase-root.MuiButton-root {
   }
 `;
