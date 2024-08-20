@@ -9,7 +9,7 @@ import Toast from '@/components/common/Toast';
 import ColorShowcase from '@/components/shop/ColorShowcase';
 import Image3DViewerModal from '@/components/shop/Image3DViewerModal';
 import useToast from '@/hooks/useToast';
-import { useGetRijksMuseumItem } from '@/api/openApi/openApii.query';
+import { useGetRijksMuseumItem } from '@/app/api/openApi/openApii.query';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';

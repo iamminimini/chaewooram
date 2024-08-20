@@ -3,8 +3,8 @@
 import { isMobile } from 'react-device-detect';
 import Lottie from 'react-lottie-player';
 import Link from 'next/link';
-import notFound from 'public/json/notFound.json';
 import { css, styled } from 'styled-components';
+import notFound from '../data/json/notFound.json';
 
 export default function NotFound() {
   return (

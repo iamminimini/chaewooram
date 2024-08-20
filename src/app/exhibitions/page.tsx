@@ -4,7 +4,7 @@ import { Fragment, useEffect, useRef } from 'react';
 import Container from '@/components/common/Container';
 import ListItemContent from '@/components/exhibition/ListItemContent';
 import ExhibitionsSkeleton from '@/components/skeleton/ExhibitionsSkeleton';
-import { useGetExhibitions } from '@/api/openApi/openApii.query';
+import { useGetExhibitions } from '@/app/api/openApi/openApii.query';
 import { throttle } from 'lodash';
 import styled from 'styled-components';
 

@@ -9,7 +9,7 @@ import Container from '@/components/common/Container';
 import Toast from '@/components/common/Toast';
 import InquiryForm from '@/components/purchase-inquiry/InquiryForm';
 import useToast from '@/hooks/useToast';
-import { useGetRijksMuseumItem } from '@/api/openApi/openApii.query';
+import { useGetRijksMuseumItem } from '@/app/api/openApi/openApii.query';
 import { ellipsisTextStyle } from '@/styles/common';
 import { styled } from 'styled-components';
 import supabase from '../utils/supabase/client';

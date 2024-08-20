@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Container from '@/components/common/Container';
 import ListItemContent from '@/components/shop/ListItemContent';
 import ShopSkeleton from '@/components/skeleton/ShopSkeleton';
-import { useGetRijksMuseum } from '@/api/openApi/openApii.query';
+import { useGetRijksMuseum } from '@/app/api/openApi/openApii.query';
 import { throttle } from 'lodash';
 import { css, styled } from 'styled-components';
 
