@@ -1,17 +1,16 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import MenuIcon from '@mui/icons-material/Menu';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useCycle } from 'framer-motion';
 import { styled } from 'styled-components';
 import { menuItems } from './HeaderData';
 
 export const MobileHeader = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, toggleOpen] = useCycle(false, true);
 
   const handleMenuToggle = () => {
-    setIsMenuOpen((prev) => !prev);
+    toggleOpen();
   };
 
   return (
@@ -22,17 +21,17 @@ export const MobileHeader = () => {
 
       {/* 모바일 메뉴 */}
       <AnimatePresence>
-        {isMenuOpen && (
+        {isOpen && (
           <MobileMenu
-            initial={{ opacity: 0, y: -50 }}
+            initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
           >
             <MobileNavList>
               {menuItems?.map((item) => (
                 <MobileNavItem key={item.id}>
-                  <NavLink href={item.href} onClick={() => setIsMenuOpen(false)}>
+                  <NavLink href={item.href} onClick={() => toggleOpen()}>
                     {item.label}
                   </NavLink>
                   {item.submenu?.length > 0 && <AnimatePresence></AnimatePresence>}
@@ -51,9 +50,9 @@ export default MobileHeader;
 const NavLink = styled(Link)`
   color: white;
   text-decoration: none;
-  font-size: 12px;
   display: flex;
   align-items: center;
+  font-size: 16px;
   && svg {
     font-size: 20px;
   }
@@ -83,7 +82,7 @@ const MobileMenu = styled(motion.div)`
   overflow: hidden;
 `;
 
-const MobileNavList = styled.ul`
+const MobileNavList = styled(motion.ul)`
   list-style: none;
   padding: 0;
   margin: 0;
