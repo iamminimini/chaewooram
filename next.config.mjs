@@ -18,6 +18,7 @@ const nextConfig = {
   // },
   // // output: 'export',
   // productionBrowserSourceMaps: true,
+  assetPrefix: '.',
 };
 
 export default nextConfig;
