@@ -20,6 +20,7 @@ const ProfileSelector = ({ profileId = 1, onChange }: ProfileSelectorProps) => {
     { id: 8, src: '/images/profile8.png', isNew: true },
     { id: 9, src: '/images/profile9.png', isNew: true },
   ];
+
   /** 프로필의 개별 애니메이션 상태관리 */
   const controlsMap = profileData.reduce(
     (acc, { id }) => {
@@ -29,24 +30,26 @@ const ProfileSelector = ({ profileId = 1, onChange }: ProfileSelectorProps) => {
     {} as Record<number, ReturnType<typeof useAnimation>>,
   );
 
-  /** 프로필의 id가 변경될때 실행되는 애니메이션 */
+  /** 프로필의 id가 변경될 때 실행되는 애니메이션 */
   useEffect(() => {
     const controls = controlsMap[profileId];
-    controls
-      .start({
-        scale: [1, 1.5, 1, 1.5, 1],
-        y: [0, -20, 0, -20, 0],
-        transition: { duration: 1, ease: 'easeInOut' },
-      })
-      .then(() => {
-        setTimeout(() => {
-          controls.start({
-            rotate: [-5, 5, -5, 5, -5, 5, -5, 5, -5, 5, 0],
-            transition: { duration: 0.5, ease: 'easeInOut' },
-          });
-        }, 1000);
-      });
-  }, [profileId]);
+    if (controls) {
+      controls
+        .start({
+          scale: [1, 1.5, 1, 1.5, 1],
+          y: [0, -20, 0, -20, 0],
+          transition: { duration: 1, ease: 'easeInOut' },
+        })
+        .then(() => {
+          setTimeout(() => {
+            controls.start({
+              rotate: [-5, 5, -5, 5, -5, 5, -5, 5, -5, 5, 0],
+              transition: { duration: 0.5, ease: 'easeInOut' },
+            });
+          }, 1000);
+        });
+    }
+  }, [profileId, controlsMap]);
 
   return (
     <>

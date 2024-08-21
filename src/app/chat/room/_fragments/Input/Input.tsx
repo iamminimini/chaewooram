@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 import { IconButton } from '@mui/material';
@@ -36,33 +36,31 @@ const Input = ({ setMessage, sendMessage, message, setFile }: any) => {
   // 이미지 제거 및 파일 상태 초기화
   const handleRemoveImage = () => {
     setImagePreview(null);
-    setFile(null); // 파일 상태 제거
+    setFile(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = ''; // 파일 입력 초기화
+      fileInputRef.current.value = '';
     }
   };
 
   // 메시지 전송 함수
-  const handleSendMessage = (event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement>) => {
-    event.preventDefault();
+  const handleSendMessage = useCallback(() => {
     if (imagePreview) {
       handleRemoveImage();
     }
     console.log('Sending message!');
-    sendMessage(event);
-  };
+    sendMessage(); // 이벤트 객체 제거
+  }, [imagePreview, handleRemoveImage, sendMessage]);
 
   // Enter 키 이벤트 처리
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    if (event.key === 'Enter' && !event.shiftKey) {
-      // Shift + Enter로 줄 바꿈 방지
-      handleSendMessage(event);
+    if (event.keyCode === 13 && !event.shiftKey) {
+      event.preventDefault();
+      handleSendMessage();
     }
   };
 
   const onEmojiClick = (event, emojiObject) => {
-    setMessage((prevInput) => prevInput + event.emoji);
+    setMessage((prevInput) => prevInput + emojiObject.emoji);
   };
 
   return (
@@ -82,11 +80,10 @@ const Input = ({ setMessage, sendMessage, message, setFile }: any) => {
           fullWidth
           value={message}
           onChange={({ target: { value } }) => setMessage(value)}
-          onKeyUp={handleKeyUp} // Enter 키 이벤트 처리
+          onKeyUp={handleKeyUp}
           placeholder="전송하려는 메시지를 입력하세요."
           $hasImageFile={imagePreview !== null}
         />
-        {/** 파일 미리보기 */}
         {imagePreview && (
           <Style.ImagePreviewBox>
             <Style.ImagePreview src={imagePreview} alt="Image Preview" />

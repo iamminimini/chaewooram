@@ -10,7 +10,7 @@ import { styled } from 'styled-components';
 
 const ENDPOINT = 'https://xenacious-terrijo-quantum-front-a81a7c54.koyeb.app/';
 
-function Chat({ params }) {
+function Room({ params }) {
   const searchParams = useSearchParams();
   const [name, setName] = useState<string>(searchParams.get('name') || '');
   const [profileId, setProfileId] = useState<string>(searchParams.get('profileId') || '');
@@ -22,7 +22,6 @@ function Chat({ params }) {
   const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
-    // searchParams와 params에 따라 상태 업데이트
     const newName = searchParams.get('name') || '';
     const profileId = searchParams.get('profileId') || '';
     const newRoom = searchParams.get('room') || '';
@@ -33,27 +32,22 @@ function Chat({ params }) {
   }, [searchParams, params, name, room]);
 
   useEffect(() => {
-    // 이름과 방이 설정되었을 때 소켓 연결 설정
     if (name && room) {
       const newSocket = io(ENDPOINT);
       setSocket(newSocket);
 
-      // 방에 참가
       newSocket.emit('join', { name, room, profileId }, (err: any) => {
         if (err) console.error('참가 오류:', err);
       });
 
-      // 메시지 수신
       newSocket.on('message', (message: any) => {
         setMessages((prevMessages) => [...prevMessages, message]);
       });
 
-      // 방 데이터 수신
       newSocket.on('roomData', ({ users }: { users: any[] }) => {
         setUsers(users);
       });
 
-      // 컴포넌트 언마운트 시 소켓 연결 해제 및 정리
       return () => {
         newSocket.emit('userDisconnect');
         newSocket.off();
@@ -62,18 +56,16 @@ function Chat({ params }) {
     }
   }, [name, room]);
 
-  const sendMessage = useCallback(
-    (event: any) => {
-      event.preventDefault();
-      if ((file || message) && socket) {
-        socket.emit('sendMessage', { message: message, file: file }, () => {
-          setMessage('');
-          setFile(null);
-        });
-      }
-    },
-    [message, file, socket],
-  );
+  const sendMessage = useCallback(() => {
+    if ((file || message) && socket) {
+      socket.emit('sendMessage', { message, file }, () => {
+        setMessage('');
+        setFile(null);
+      });
+    } else {
+      console.warn('No message or file to send, or socket is not connected.');
+    }
+  }, [message, file, socket]);
 
   return (
     <ChatContainer>
@@ -84,12 +76,12 @@ function Chat({ params }) {
   );
 }
 
-export default Chat;
+export default Room;
 
 const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: calc(100vh - 100px);
-  overflow: hidden; /* 스크롤바를 숨기기 위한 설정 */
+  overflow: hidden;
   width: 100%;
 `;
