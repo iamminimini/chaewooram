@@ -8,7 +8,7 @@ import Messages from './_fragments/Messages/Messages';
 import io from 'socket.io-client';
 import { styled } from 'styled-components';
 
-const ENDPOINT = 'https://abundant-natalie-quantum-front-10f3fe81.koyeb.app/';
+const ENDPOINT = 'https://xenacious-terrijo-quantum-front-a81a7c54.koyeb.app/';
 
 function Chat({ params }) {
   const searchParams = useSearchParams();

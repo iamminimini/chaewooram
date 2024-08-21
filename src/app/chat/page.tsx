@@ -13,7 +13,7 @@ import { styled } from 'styled-components';
 import { ModalType, RoomsState } from './chatType';
 
 // Constants for socket endpoint
-const ENDPOINT = 'https://abundant-natalie-quantum-front-10f3fe81.koyeb.app';
+const ENDPOINT = 'https://xenacious-terrijo-quantum-front-a81a7c54.koyeb.app/';
 const socket = io(ENDPOINT);
 
 function Join() {
