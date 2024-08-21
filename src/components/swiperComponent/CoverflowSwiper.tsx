@@ -66,6 +66,7 @@ const SwiperContainer = styled(Swiper)`
 `;
 
 const SwiperSlideWrapper = styled(SwiperSlide)`
+  margin-top: 40px;
   background: #fff;
   display: flex;
   align-items: center;
@@ -73,7 +74,7 @@ const SwiperSlideWrapper = styled(SwiperSlide)`
   font-size: 18px;
   font-weight: bold;
   color: #000;
-  height: 300px;
+  height: 350px;
   width: 300px;
   border: 1px solid #ddd;
   border-radius: 10px;

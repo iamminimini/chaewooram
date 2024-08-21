@@ -58,6 +58,7 @@ const Banner3Container = styled.div`
 
       ${media.tablet} {
         flex-direction: column;
+        overflow: hidden;
       }
     `;
   }}
@@ -67,7 +68,7 @@ const TextContent = styled.div`
   ${({ theme }) => {
     const { colors, media } = theme;
     return css`
-      width: 50%;
+      width: 100%;
       height: 1200px;
       display: flex;
       flex-direction: column;
@@ -150,7 +151,8 @@ const VideoWrapper = styled.div`
   ${({ theme }) => {
     const { colors, media } = theme;
     return css`
-      width: 50%;
+      width: 30%;
+      min-width: 900px;
       height: 1200px;
       display: flex;
       justify-content: center;
@@ -159,11 +161,14 @@ const VideoWrapper = styled.div`
       background-image: url('/images/main_banner_bg.png');
       background-repeat: no-repeat; /* 추가된 부분 */
       position: relative;
+      background-size: cover;
 
       ${media.tablet} {
         width: 100%;
         height: 600px;
         background-image: url('/images/main_banner_mobile_bg.png');
+        background-size: contain;
+        margin-left: -25px;
       }
     `;
   }}
@@ -180,9 +185,9 @@ const Video = styled.video`
       left: 52%;
       transform: translate(-50%, -50%);
       ${media.tablet} {
-        width: 330px;
-        left: 51.5%;
-        top: 42%;
+        width: 390px;
+        left: 51%;
+        top: 40%;
       }
     `;
   }}

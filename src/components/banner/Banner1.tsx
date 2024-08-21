@@ -34,7 +34,7 @@ const cards = [
 
 export const Banner1 = () => {
   const { scrollYProgress } = useScroll();
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.1]);
   const { ref: textRef, getAnimationProps } = useAnimationInView();
 
   return (
