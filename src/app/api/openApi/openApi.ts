@@ -26,7 +26,7 @@ const getRijksMuseum = async ({ page = 1 }) => {
   return data;
 };
 const getRijksMuseumItem = async (id: string) => {
-  const { data } = await axios.get(`http://www.rijksmuseum.nl/api/en/collection/${id}`, {
+  const { data } = await axios.get(`https://www.rijksmuseum.nl/api/en/collection/${id}`, {
     params: {
       key: 'Kb8osXJE',
       culture: 'en',
