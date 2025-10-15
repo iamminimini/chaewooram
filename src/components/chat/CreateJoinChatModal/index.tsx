@@ -1,8 +1,8 @@
 import { memo, useEffect, useState } from 'react';
 import DialogComponent from '@/components/common/DialogComponent';
 import { ModalType } from '@/app/chat/chatType';
-import { Button, TextField } from '@mui/material';
 import CasinoIcon from '@mui/icons-material/Casino';
+import { Button, TextField } from '@mui/material';
 import { css, styled } from 'styled-components';
 import ProfileSelector from '../ProfileSelector';
 
@@ -178,9 +178,9 @@ const StyledRandomButton = styled(Button)`
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: #1e53e5;
-    border: 1px solid #d9e5ff;
-    background: #f7faff;
+    color: ${({ theme }) => theme.colors.primary};
+    border: 1px solid ${({ theme }) => theme.colors.borderLineSub};
+    background: ${({ theme }) => theme.colors.backgroundContent};
     padding: 6px 10px;
     min-width: auto;
     border-radius: 9999px;
@@ -188,8 +188,8 @@ const StyledRandomButton = styled(Button)`
     letter-spacing: -0.2px;
 
     &:hover {
-      background: #eef5ff;
-      border-color: #c7dbff;
+      opacity: 0.8;
+      transform: translateY(-1px);
     }
 
     svg {

@@ -7,21 +7,26 @@ interface StyledTextFieldProps {
 }
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  gap: 12px;
-  background: #fff;
-  border-top: 1px solid #e0e0e0;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-
   ${({ theme }) => {
-    const { media } = theme;
+    const { colors } = theme;
     return css`
-      ${media.mobile} {
-        padding: 12px;
-        gap: 8px;
-      }
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      gap: 12px;
+      background: ${colors.backgroundContent};
+      margin: 0px 20px;
+      border-radius: 24px;
+
+      ${({ theme }) => {
+        const { media } = theme;
+        return css`
+          ${media.mobile} {
+            padding: 12px;
+            gap: 8px;
+          }
+        `;
+      }}
     `;
   }}
 `;
@@ -42,30 +47,35 @@ export const MediaPicker = styled.div`
 `;
 
 export const InputWrapper = styled.form`
-  width: 100%;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  gap: 12px;
-  background: #f8f9fa;
-  border-radius: 24px;
-  padding: 8px;
-  border: 2px solid transparent;
-  transition: border-color 0.2s ease;
-
-  &:focus-within {
-    border-color: #2979ff;
-    background: #fff;
-  }
-
   ${({ theme }) => {
-    const { media } = theme;
+    const { colors } = theme;
     return css`
-      ${media.mobile} {
-        gap: 8px;
-        padding: 6px;
-        border-radius: 20px;
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      background: ${colors.backgroundInner};
+      border-radius: 24px;
+      padding: 8px;
+      border: 2px solid transparent;
+      transition: border-color 0.2s ease;
+
+      &:focus-within {
+        border-color: ${colors.primary};
+        background: ${colors.backgroundContent};
       }
+
+      ${({ theme }) => {
+        const { media } = theme;
+        return css`
+          ${media.mobile} {
+            gap: 8px;
+            padding: 6px;
+            border-radius: 20px;
+          }
+        `;
+      }}
     `;
   }}
 `;
@@ -83,71 +93,63 @@ export const InputField = styled.input`
   }
 `;
 
-export const SendButton = styled(Button)`
-  && {
-    background: #2979ff !important;
-    color: white !important;
-    border: none !important;
-    cursor: pointer;
-    font-size: 16px;
-    white-space: nowrap;
-    min-width: 48px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50% !important;
-    box-shadow: 0 2px 8px rgba(41, 121, 255, 0.3);
-    transition: all 0.2s ease;
-    padding: 0 !important;
-    margin: 0 !important;
+export const SendButton = styled(Button)(({ theme }) => {
+  const { colors } = theme;
+  return css`
+    && {
+      background: ${colors.primary};
+      color: ${colors.textOnlyWhite};
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      white-space: nowrap;
+      min-width: 48px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(41, 121, 255, 0.3);
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: ${colors.primaryHover};
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+        background: ${colors.primaryActive};
+      }
+
+      ${({ theme }) => {
+        const { media } = theme;
+        return css`
+          ${media.mobile} {
+            min-width: 40px;
+            width: 40px;
+            height: 40px;
+            font-size: 14px;
+          }
+        `;
+      }}
+    }
+  `;
+});
+
+export const StyledFileIcon = styled(AttachFileIcon)(({ theme }) => {
+  const { colors, media } = theme;
+  return css`
+    color: ${colors.textTxt70};
+    transform: rotate(35deg);
+    transition: color 0.2s ease;
 
     &:hover {
-      background: #2962ff !important;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(41, 121, 255, 0.4);
+      color: ${colors.primary};
     }
-
-    &:active {
-      transform: translateY(0);
-      background: #1e53e5 !important;
+    ${media.mobile} {
+      font-size: 20px;
     }
-
-    .MuiButton-root {
-      min-width: auto !important;
-      padding: 0 !important;
-    }
-
-    ${({ theme }) => {
-      const { media } = theme;
-      return css`
-        ${media.mobile} {
-          min-width: 40px !important;
-          width: 40px !important;
-          height: 40px !important;
-          font-size: 14px;
-        }
-      `;
-    }}
-  }
-`;
-
-export const StyledFileIcon = styled(AttachFileIcon)`
-  color: #666;
-  transform: rotate(35deg);
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: #2979ff;
-  }
-
-  ${({ theme }) => {
-    const { media } = theme;
-    return css`
-      ${media.mobile} {
-        font-size: 20px;
-      }
-    `;
-  }}
-`;
+  `;
+});
 
 export const StyledTextField = styled(TextField)<StyledTextFieldProps>`
   && {
@@ -178,7 +180,7 @@ export const StyledTextField = styled(TextField)<StyledTextFieldProps>`
       padding: 0;
 
       &::placeholder {
-        color: #999;
+        color: ${({ theme }) => theme.colors.textTxt70};
         opacity: 1;
       }
     }
@@ -207,28 +209,33 @@ export const StyledTextField = styled(TextField)<StyledTextFieldProps>`
 `;
 
 export const ImagePreviewBox = styled.div`
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  right: 0;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
   ${({ theme }) => {
-    const { media } = theme;
+    const { colors } = theme;
     return css`
-      ${media.mobile} {
-        padding: 8px;
-        gap: 8px;
-        border-radius: 8px;
-      }
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      right: 0;
+      background: ${colors.backgroundContent};
+      border: 1px solid ${colors.borderLineSub};
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      ${({ theme }) => {
+        const { media } = theme;
+        return css`
+          ${media.mobile} {
+            padding: 8px;
+            gap: 8px;
+            border-radius: 8px;
+          }
+        `;
+      }}
     `;
   }}
 `;
@@ -252,35 +259,33 @@ export const ImagePreview = styled.img`
   }}
 `;
 
-export const RemoveButton = styled(IconButton)`
-  && {
-    color: #666;
-    background: rgba(0, 0, 0, 0.05);
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
+export const RemoveButton = styled(IconButton)(({ theme }) => {
+  const { colors, media } = theme;
+  return css`
+    && {
+      color: ${colors.textTxt70};
+      background: ${colors.backgroundInner};
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
 
-    svg {
-      font-size: 16px;
+      svg {
+        font-size: 16px;
+      }
+
+      &:hover {
+        background: rgba(255, 0, 0, 0.1);
+        color: #ff4444;
+      }
     }
 
-    &:hover {
-      background: rgba(255, 0, 0, 0.1);
-      color: #ff4444;
+    ${media.mobile} {
+      width: 24px;
+      height: 24px;
+
+      svg {
+        font-size: 14px;
+      }
     }
-
-    ${({ theme }) => {
-      const { media } = theme;
-      return css`
-        ${media.mobile} {
-          width: 24px;
-          height: 24px;
-
-          svg {
-            font-size: 14px;
-          }
-        }
-      `;
-    }}
-  }
-`;
+  `;
+});

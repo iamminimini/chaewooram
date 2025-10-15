@@ -94,7 +94,7 @@ const AnimatedTitle = styled(motion.h1)`
   ${({ theme }) => {
     const { colors, media } = theme;
     return css`
-      color: #2a2a2a;
+      color: ${colors.textTxt100Strong};
       font-size: 40px;
       font-weight: bold;
       text-align: center;

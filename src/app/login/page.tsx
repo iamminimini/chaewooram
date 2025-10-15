@@ -144,6 +144,9 @@ const SocialLoginButton = styled.button<{ backgroundColor: string; boxShadow: st
   background-color: ${({ backgroundColor }) => backgroundColor};
   box-shadow: ${({ boxShadow }) => boxShadow}; /* 자연스러운 그림자 설정 */
   border: none; /* 기본 테두리 제거 */
+
+  color: #000;
+
   transition:
     background-color 0.3s,
     box-shadow 0.3s; /* 전환 효과 추가 */

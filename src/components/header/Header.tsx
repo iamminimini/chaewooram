@@ -51,7 +51,6 @@ export const Header = () => {
           />
         </NavLink>
 
-        {isMobile ? 'true' : 'false'}
         {/* 메뉴 버튼 */}
         {!isMobile && <HeaderMenu />}
 
@@ -72,7 +71,7 @@ export const Header = () => {
             }}
           >
             <ThumbUpAltOutlinedIcon
-              color="secondary"
+              color="primary"
               sx={{
                 fontSize: isMobile ? '20px' : '24px',
               }}
@@ -117,7 +116,7 @@ const HeaderContainer = styled.header`
       top: 0;
       left: 0;
       width: 100%;
-      background: black;
+      background: #22242a;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -127,14 +126,13 @@ const HeaderContainer = styled.header`
 
       ${media.mobile} {
         padding: 0 16px;
-        height: 44px;
       }
     `;
   }}
 `;
 
 const NavLink = styled(Link)`
-  color: white;
+  color: ${({ theme }) => theme.colors.textOnlyWhite};
   text-decoration: none;
   font-size: 12px;
   display: flex;
@@ -144,18 +142,6 @@ const NavLink = styled(Link)`
   }
   &:hover {
     font-weight: bold;
-  }
-`;
-
-const SubMenuItemList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  color: white;
-  font-size: 13px;
-
-  > h4 {
-    color: gray;
-    margin-bottom: 10px;
   }
 `;
 

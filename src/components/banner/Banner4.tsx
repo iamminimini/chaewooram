@@ -59,7 +59,6 @@ export const Banner4 = () => {
       <BookButtonWrapper>
         <BookButton
           variant="contained"
-          color="secondary"
           size="small"
           onClick={() => router.push(`/Chats`)}
           startIcon={<ArrowForwardIcon />}
@@ -78,7 +77,7 @@ const Banner4Container = styled.div`
   align-items: center;
   text-align: center;
   line-height: 1.5;
-  color: #2a2a2a;
+  color: ${({ theme }) => theme.colors.textTxt100Strong};
 `;
 
 const AnimatedTitle = styled(motion.h1)`
@@ -90,7 +89,8 @@ const AnimatedTitle = styled(motion.h1)`
   align-items: center;
   line-height: 1.5;
   max-width: 800px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  color: ${({ theme }) => theme.colors.textTxt100Strong};
 `;
 
 const AnimatedSubtitle = styled(motion.p)`
@@ -98,11 +98,12 @@ const AnimatedSubtitle = styled(motion.p)`
     const { colors, media } = theme;
     return css`
       font-size: 30px;
-      margin-bottom: 20px;
+      margin-bottom: 40px;
       font-weight: bold;
       position: relative;
       color: transparent;
-      background: linear-gradient(135deg, #f9d423, #e0aaff, #b09adb, #9c89b8, #cfc4e0);
+      color: ${colors.textTxt100Strong};
+      /* background: linear-gradient(135deg, #f9d423, #e0aaff, #b09adb, #9c89b8, #cfc4e0); */
       background-clip: text;
       -webkit-background-clip: text;
       border: 2px solid transparent;
@@ -136,6 +137,7 @@ const AnimatedDescription = styled(motion.p)`
       font-size: 18px;
       margin-bottom: 40px;
       word-break: keep-all;
+      color: ${colors.textTxt70};
       ${media.tablet} {
         text-align: center;
         font-size: 16px;
@@ -189,13 +191,15 @@ const BookButtonWrapper = styled.div`
 
 const BookButton = styled(Button)`
   && {
-    color: #2a2a2a;
+    background-color: ${({ theme }) => theme.colors.primary};
+    transition: all 0.2s;
+    color: ${({ theme }) => theme.colors.textOnlyWhite};
     font-weight: bold;
     padding: 4px 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
     &:hover {
-      background: linear-gradient(135deg, #59cff0 0%, #6aa6ee 25%, #00d2a3 50%, #b9fbc0 75%, #f9f47c 100%);
+      opacity: 0.8;
     }
   }
 `;

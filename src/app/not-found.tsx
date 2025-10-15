@@ -60,6 +60,7 @@ const Text = styled.div`
       font-size: 17px;
       letter-spacing: -1px;
       white-space: nowrap;
+      line-height: 20px;
     `;
   }}
 `;
@@ -77,9 +78,9 @@ const StyleLink = styled(Link)`
   ${({ theme }) => {
     const { colors } = theme;
     return css`
-      background-color: #111;
+      background-color: ${colors.primary};
       border-radius: 10px;
-      color: #fff;
+      color: ${colors.textOnlyWhite};
       padding: 10px 16px;
       margin-top: 20px;
     `;

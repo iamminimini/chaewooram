@@ -145,12 +145,12 @@ const NoRoomsMessage = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #333;
+  color: ${({ theme }) => theme.colors.textTxt90};
   svg {
     width: 60px;
     height: 60px;
     margin-bottom: 14px;
-    color: #333;
+    color: ${({ theme }) => theme.colors.textTxt90};
   }
 `;
 
@@ -158,29 +158,28 @@ const CreateRoomButton = styled.button`
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #2979ff;
-  color: #fff;
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textOnlyWhite};
   border: none;
   border-radius: 9999px;
   padding: 8px 14px;
   font-size: 14px;
   line-height: 1;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(41, 121, 255, 0.3);
+
   transition:
     background 0.2s ease,
     transform 0.1s ease,
     box-shadow 0.2s ease;
 
   &:hover {
-    background: #2962ff;
+    opacity: 0.8;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(41, 121, 255, 0.4);
   }
 
   &:active {
+    opacity: 0.8;
     transform: translateY(0);
-    background: #1e53e5;
   }
 
   svg {
@@ -194,9 +193,9 @@ const JoinButton = styled.button`
   justify-content: center;
   padding: 8px 12px;
   border-radius: 10px;
-  border: 1px solid #e0e0e0;
-  background: #fff;
-  color: #333;
+  border: 1px solid ${({ theme }) => theme.colors.borderLineSub};
+  background: ${({ theme }) => theme.colors.backgroundContent};
+  color: ${({ theme }) => theme.colors.textTxt90};
   font-size: 14px;
   cursor: pointer;
   transition:
@@ -205,8 +204,7 @@ const JoinButton = styled.button`
     transform 0.1s ease;
 
   &:hover {
-    border-color: #2979ff;
-    box-shadow: 0 2px 8px rgba(41, 121, 255, 0.2);
+    border-color: ${({ theme }) => theme.colors.primary};
     transform: translateY(-1px);
   }
 
@@ -217,7 +215,7 @@ const JoinButton = styled.button`
 
 const StyledCard = styled(Card)`
   border-radius: 14px;
-  border: 1px solid #eee;
+  border: 1px solid ${({ theme }) => theme.colors.borderLineSub};
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   transition:
     transform 0.12s ease,
@@ -226,7 +224,6 @@ const StyledCard = styled(Card)`
 
   &:hover {
     transform: translateY(-2px);
-    border-color: #e5e7eb;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   }
 `;
@@ -254,9 +251,9 @@ const UserCountBadge = styled.div`
   gap: 6px;
   padding: 4px 8px;
   border-radius: 9999px;
-  background: #f1f5ff;
-  color: #1e53e5;
-  border: 1px solid #d9e5ff;
+  background: ${({ theme }) => theme.colors.backgroundInner};
+  color: ${({ theme }) => theme.colors.primary};
+  border: 1px solid ${({ theme }) => theme.colors.borderLineSub};
 
   svg {
     font-size: 18px;

@@ -17,5 +17,11 @@ export const PickerContainer = styled.div`
 `;
 
 export const StyledEmojiEmotionsIcon = styled(EmojiEmotionsOutlinedIcon)`
-  color: #333;
+  color: ${({ theme }) => theme.colors.textTxt70};
+  transition: color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    color: ${({ theme }) => theme.colors.primary};
+  }
 `;

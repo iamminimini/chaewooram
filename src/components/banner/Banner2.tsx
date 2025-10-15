@@ -36,7 +36,6 @@ export const Banner2 = () => {
       <ExhibitionButtonWrapper>
         <ExhibitionButton
           variant="contained"
-          color="secondary"
           size="small"
           onClick={() => router.push(`/exhibitions`)}
           startIcon={<ArrowForwardIcon />}
@@ -58,7 +57,7 @@ const AnimatedTitle = styled(motion.h1)`
   ${({ theme }) => {
     const { colors, media } = theme;
     return css`
-      color: #2a2a2a;
+      color: ${colors.textTxt100Strong};
       font-size: 22px;
       text-align: center;
       ${media.tablet} {
@@ -73,11 +72,12 @@ const AnimatedSubtitle = styled(motion.p)`
     const { colors, media } = theme;
     return css`
       text-align: center;
-      margin-top: 20px;
+      margin-top: 50px;
       font-size: 30px;
       position: relative;
       color: transparent;
-      background: linear-gradient(135deg, #f9d423, #e0aaff, #b09adb, #9c89b8, #cfc4e0);
+      color: ${colors.textTxt100Strong};
+      /* background: linear-gradient(135deg, #f9d423, #e0aaff, #b09adb, #9c89b8, #cfc4e0); */
       background-clip: text;
       -webkit-background-clip: text;
       border: 2px solid transparent;
@@ -110,15 +110,20 @@ const ExhibitionButtonWrapper = styled.div`
   margin-top: 20px;
 `;
 
-const ExhibitionButton = styled(Button)`
-  && {
-    color: #2a2a2a;
-    font-weight: bold;
-    padding: 4px 16px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+const ExhibitionButton = styled(Button)(({ theme }) => {
+  const { colors } = theme;
+  return css`
+    && {
+      background-color: ${colors.primary};
+      transition: all 0.2s;
+      color: ${colors.textOnlyWhite};
+      font-weight: bold;
+      padding: 4px 16px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
-    &:hover {
-      background-color: ${(props) => props.theme.palette.primary.main};
+      &:hover {
+        background-color: ${colors.primary};
+      }
     }
-  }
-`;
+  `;
+});
