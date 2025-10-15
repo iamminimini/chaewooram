@@ -6,6 +6,7 @@ import CreateJoinChatModal from '@/components/chat/CreateJoinChatModal';
 import Container from '@/components/common/Container';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import Error from '@mui/icons-material/Error';
+import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Box, Button, Card, CardActions, CardContent, IconButton, Typography } from '@mui/material';
 import io from 'socket.io-client';
@@ -61,14 +62,10 @@ function Join() {
       title="채팅"
       rightContent={
         <>
-          <Button
-            variant="contained"
-            size="small"
-            onClick={() => setModalType(ModalType.ROOM_CREATE)}
-            startIcon={<AddCommentIcon />}
-          >
-            새로운 방 생성
-          </Button>
+          <CreateRoomButton onClick={() => setModalType(ModalType.ROOM_CREATE)}>
+            <AddCommentIcon />
+            <span>새로운 방 생성</span>
+          </CreateRoomButton>
           <IconButton onClick={fetchGetRoomsData} color="primary">
             <RefreshIcon />
           </IconButton>
@@ -92,25 +89,30 @@ function Join() {
           }}
         >
           {Object.keys(rooms).map((room) => (
-            <Card key={room} variant="outlined">
-              <CardContent>
-                <RoomTitle sx={{ fontSize: 24 }} gutterBottom>
-                  {decodeURIComponent(room)}
-                  <span>({rooms[room]?.users.length}명)</span>
-                </RoomTitle>
+            <StyledCard key={room}>
+              <StyledCardContent>
+                <CardTopRow>
+                  <RoomTitle sx={{ fontSize: 18 }} gutterBottom>
+                    {decodeURIComponent(room)}
+                  </RoomTitle>
+                  <UserCountBadge>
+                    <PeopleAltOutlinedIcon />
+                    <span>{rooms[room]?.users.length || 0}</span>
+                  </UserCountBadge>
+                </CardTopRow>
                 <Typography variant="body2">방장: {rooms[room]?.users[0]?.name}</Typography>
-              </CardContent>
-              <CardActions>
-                <Button
+              </StyledCardContent>
+              <StyledCardActions>
+                <JoinButton
                   onClick={() => {
                     setEntryRoom(room);
                     setModalType(ModalType.ROOM_ENTRY);
                   }}
                 >
                   참여하기
-                </Button>
-              </CardActions>
-            </Card>
+                </JoinButton>
+              </StyledCardActions>
+            </StyledCard>
           ))}
         </Box>
       )}
@@ -143,11 +145,122 @@ const NoRoomsMessage = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #333;
+  color: ${({ theme }) => theme.colors.textTxt90};
   svg {
     width: 60px;
     height: 60px;
     margin-bottom: 14px;
-    color: #333;
+    color: ${({ theme }) => theme.colors.textTxt90};
+  }
+`;
+
+const CreateRoomButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textOnlyWhite};
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 14px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+
+  svg {
+    font-size: 18px;
+  }
+`;
+
+const JoinButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid ${({ theme }) => theme.colors.borderLineSub};
+  background: ${({ theme }) => theme.colors.backgroundContent};
+  color: ${({ theme }) => theme.colors.textTxt90};
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.primary};
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+`;
+
+const StyledCard = styled(Card)`
+  border-radius: 14px;
+  border: 1px solid ${({ theme }) => theme.colors.borderLineSub};
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+`;
+
+const StyledCardContent = styled(CardContent)`
+  padding: 16px 16px 8px 16px !important;
+`;
+
+const StyledCardActions = styled(CardActions)`
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 12px 12px 12px !important;
+`;
+
+const CardTopRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+`;
+
+const UserCountBadge = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  background: ${({ theme }) => theme.colors.backgroundInner};
+  color: ${({ theme }) => theme.colors.primary};
+  border: 1px solid ${({ theme }) => theme.colors.borderLineSub};
+
+  svg {
+    font-size: 18px;
+  }
+
+  span {
+    font-size: 13px;
+    font-weight: 600;
   }
 `;

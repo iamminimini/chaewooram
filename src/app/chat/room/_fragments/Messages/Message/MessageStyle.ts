@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { MessagePropsType } from './MessageType';
 
 export const DownloadButton = styled.div`
@@ -18,6 +18,17 @@ export const DownloadButton = styled.div`
   &:hover {
     color: #999;
   }
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        width: 80px;
+        height: 80px;
+        background-color: red;
+      }
+    `;
+  }}
 `;
 
 export const ImagePreviewBox = styled.div`
@@ -31,12 +42,33 @@ export const ImagePreviewBox = styled.div`
   &:hover ${DownloadButton} {
     opacity: 1;
   }
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        width: 80px;
+        height: 80px;
+        margin: 10px;
+      }
+    `;
+  }}
 `;
 
 export const ImagePreview = styled.img`
   width: 100px;
   height: 100px;
   object-fit: cover;
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        width: 80px;
+        height: 80px;
+      }
+    `;
+  }}
 `;
 
 export const MessageContainer = styled.div<MessagePropsType>`
@@ -68,6 +100,7 @@ export const MessageBox = styled.div<MessagePropsType>`
   flex-direction: column;
   gap: 10px;
   word-break: break-all;
+  max-width: 70%;
 
   &::after {
     content: '';
@@ -95,6 +128,18 @@ export const MessageBox = styled.div<MessagePropsType>`
         transform-origin: 0 0;
       `};
   }
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        max-width: 85%;
+        padding: 8px 16px;
+        font-size: 13px;
+        border-radius: 16px;
+      }
+    `;
+  }}
 `;
 
 export const MessageWrapper = styled.div``;
@@ -128,9 +173,8 @@ export const MessageText = styled.div`
   width: 100%;
   letter-spacing: 0;
   float: left;
-  font-size: 1.1em;
+  font-size: 1em;
   word-wrap: break-word;
-  white-space: pre;
   margin: 0;
 `;
 
@@ -143,4 +187,15 @@ export const StyledAvatar = styled.div<{ $profileId: number }>`
   background-image: ${({ $profileId }) => `url('/images/profile${$profileId}.png')`};
   border-radius: 50%;
   border: 3px solid #ddd;
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        width: 60px;
+        height: 60px;
+        border: 2px solid #ddd;
+      }
+    `;
+  }}
 `;

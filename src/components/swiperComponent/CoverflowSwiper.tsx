@@ -44,13 +44,13 @@ const SwiperContainer = styled(Swiper)`
   ${({ theme }) => {
     const { colors, media } = theme;
     return css`
-      width: 100vw;
+      width: 100%;
       padding: 120px 0px;
       margin-bottom: 50px;
 
       & .swiper-pagination {
         .swiper-pagination-bullet-active {
-          background-color: ${(props) => props.theme.palette.secondary.main};
+          background-color: ${(props) => props.theme.colors.primary};
         }
       }
       & .swiper-slide-active {
@@ -59,7 +59,10 @@ const SwiperContainer = styled(Swiper)`
       }
 
       ${media.tablet} {
-        width: calc(100vw - 24px);
+        width: calc(100vw - 124px);
+      }
+      ${media.mobile} {
+        width: calc(100vw - 54px);
       }
     `;
   }}
@@ -67,16 +70,14 @@ const SwiperContainer = styled(Swiper)`
 
 const SwiperSlideWrapper = styled(SwiperSlide)`
   margin-top: 40px;
-  background: #fff;
+  background-color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   font-weight: bold;
-  color: #000;
   height: 350px;
   width: 300px;
-  border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   background-size: cover; /* 배경 이미지 크기 조절 */

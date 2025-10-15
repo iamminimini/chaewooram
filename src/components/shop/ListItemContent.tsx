@@ -23,29 +23,26 @@ const ListItemContent = ({ item, handleNavigateToDetail }) => {
 
 export default ListItemContent;
 
-const CardItem = styled.div`
-  width: calc(50% - 20px);
-  padding: 20px;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  &:hover {
-    background-color: #000;
-    color: #ededed;
-  }
-  ${({ theme }) => {
-    const { media } = theme;
-    return css`
-      ${media.tablet} {
-        width: 100%;
-      }
-    `;
-  }}
-`;
+const CardItem = styled.div(({ theme }) => {
+  const { colors, media } = theme;
+  return css`
+    width: calc(50% - 20px);
+    padding: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &:hover {
+      background-color: ${colors.backgroundInner};
+      color: ${colors.textTxt100Strong};
+    }
+    ${media.tablet} {
+      width: 100%;
+    }
+  `;
+});
 
 const ImageWrapper = styled.div`
   width: 100%;
@@ -71,7 +68,7 @@ const NoImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #888;
+  color: ${({ theme }) => theme.colors.textTxt70};
   border: 1px solid #ccc;
 `;
 
@@ -88,5 +85,5 @@ const Title = styled.div`
 const SubTitle = styled.div`
   font-size: 13px;
   line-height: 1.1;
-  color: #777;
+  color: ${({ theme }) => theme.colors.textTxt70};
 `;

@@ -1,93 +1,130 @@
 'use client';
 
 import Link from 'next/link';
+import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
-import { AnimatePresence, motion, useCycle } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { styled } from 'styled-components';
 import { menuItems } from './HeaderData';
 
-export const MobileHeader = () => {
-  const [isOpen, toggleOpen] = useCycle(false, true);
+interface MobileHeaderMenuProps {
+  isOpen: boolean;
+  onToggle: () => void;
+}
 
-  const handleMenuToggle = () => {
-    toggleOpen();
-  };
-
+export const MobileHeaderMenu = ({ isOpen, onToggle }: MobileHeaderMenuProps) => {
   return (
     <>
-      <MobileMenuButton onClick={handleMenuToggle}>
-        <MenuIcon />
-      </MobileMenuButton>
+      <MobileMenuButton onClick={onToggle}>{isOpen ? <CloseIcon /> : <MenuIcon />}</MobileMenuButton>
 
-      {/* 모바일 메뉴 */}
+      {/* 사이드바 */}
       <AnimatePresence>
         {isOpen && (
-          <MobileMenu
-            initial={{ opacity: 1, y: 0 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-          >
-            <MobileNavList>
-              {menuItems?.map((item) => (
-                <MobileNavItem key={item.id}>
-                  <NavLink href={item.href} onClick={() => toggleOpen()}>
-                    {item.label}
-                  </NavLink>
-                  {item.submenu?.length > 0 && <AnimatePresence></AnimatePresence>}
-                </MobileNavItem>
-              ))}
-            </MobileNavList>
-          </MobileMenu>
+          <>
+            <Backdrop onClick={onToggle} />
+            <Sidebar
+              initial={{ x: -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: -300 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+            >
+              <SidebarHeader>
+                <CloseButton onClick={onToggle}>
+                  <CloseIcon />
+                </CloseButton>
+              </SidebarHeader>
+
+              <SidebarContent>
+                {menuItems?.map((item) => (
+                  <SidebarMenuItem key={item.id}>
+                    <SidebarNavLink href={item.href} onClick={onToggle}>
+                      {item.label}
+                    </SidebarNavLink>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarContent>
+            </Sidebar>
+          </>
         )}
       </AnimatePresence>
     </>
   );
 };
 
-export default MobileHeader;
-
-const NavLink = styled(Link)`
-  color: white;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  && svg {
-    font-size: 20px;
-  }
-  &:hover {
-    font-weight: bold;
-  }
-`;
+export default MobileHeaderMenu;
 
 const MobileMenuButton = styled.div`
   font-size: 24px;
   color: white;
   cursor: pointer;
   display: none;
+
   @media (max-width: 768px) {
     display: block;
   }
 `;
 
-const MobileMenu = styled(motion.div)`
+const Backdrop = styled.div`
   position: fixed;
-  top: 48px;
+  top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+`;
+
+const Sidebar = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
   background: black;
-  padding: 20px;
-  z-index: 20;
-  overflow: hidden;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
 `;
 
-const MobileNavList = styled(motion.ul)`
-  list-style: none;
-  padding: 0;
-  margin: 0;
+const SidebarHeader = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 20px;
+  border-bottom: 1px solid #333;
 `;
 
-const MobileNavItem = styled.li`
-  margin-bottom: 15px;
+const CloseButton = styled.button`
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+const SidebarContent = styled.div`
+  flex: 1;
+  padding: 20px 0;
+`;
+
+const SidebarMenuItem = styled.div`
+  margin-bottom: 8px;
+`;
+
+const SidebarNavLink = styled(Link)`
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #333;
+  }
 `;

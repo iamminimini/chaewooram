@@ -120,7 +120,7 @@ const NavWrapper = styled.div`
 const NavItem = styled.li``;
 
 const NavLink = styled(Link)`
-  color: white;
+  color: ${({ theme }) => theme.colors.textOnlyWhite};
   text-decoration: none;
   font-size: 12px;
   display: flex;
@@ -138,7 +138,7 @@ const MotionSubMenu = styled(motion.ul)`
   top: 48px;
   left: 0;
   width: 100vw;
-  background: black;
+  background: #22242a;
   overflow: hidden;
   display: flex;
   justify-content: center;

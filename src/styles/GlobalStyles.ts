@@ -20,10 +20,14 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     margin: 0;
+    background: ${({ theme }) => theme.colors.backgroundWrapper};
+    color: ${({ theme }) => theme.colors.textTxt90};
+    transition: background 0.3s, color 0.3s;
   }
 
   main {
     width: 100%;
+
   }
 
   ul, ol {
@@ -31,7 +35,7 @@ export const GlobalStyle = createGlobalStyle`
   } 
 
   a {
-    color: inherit;
+    color: ${({ theme }) => theme.colors.primary};
     text-decoration: none;
   }
 

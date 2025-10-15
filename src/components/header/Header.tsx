@@ -18,6 +18,7 @@ import ProfileModal from './ProfileModal';
 
 export const Header = () => {
   const [modalOpen, setModalOpen] = useState(false); // 프로필 모달
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // 모바일 메뉴
 
   const favorites = useRecoilValue(favoritesState); // 즐겨찾기
   const [user, setUser] = useRecoilState(userState);
@@ -28,21 +29,53 @@ export const Header = () => {
     router.push('/favorites');
   };
 
+  const handleMobileMenuToggle = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <>
       <HeaderContainer>
         {/* 로고 */}
         <NavLink href="/">
-          <Image src={'/images/favicon.png'} alt={'search icon'} width={100} height={30} />
+          <Image
+            src={'/images/favicon.png'}
+            alt={'search icon'}
+            width={100}
+            height={30}
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+              maxHeight: '24px',
+            }}
+          />
         </NavLink>
+
         {/* 메뉴 버튼 */}
         {!isMobile && <HeaderMenu />}
 
         {/* 메뉴 */}
         <RightWrapper>
           {/* 장바구니 */}
-          <Badge color="error" badgeContent={favorites?.length} onClick={handleFavorites}>
-            <ThumbUpAltOutlinedIcon color="secondary" />
+          <Badge
+            color="error"
+            badgeContent={favorites?.length}
+            onClick={handleFavorites}
+            sx={{
+              cursor: 'pointer',
+              '& .MuiBadge-badge': {
+                fontSize: isMobile ? '10px' : '12px',
+                minWidth: isMobile ? '16px' : '18px',
+                height: isMobile ? '16px' : '18px',
+              },
+            }}
+          >
+            <ThumbUpAltOutlinedIcon
+              color="primary"
+              sx={{
+                fontSize: isMobile ? '20px' : '24px',
+              }}
+            />
           </Badge>
 
           {/* 로그인 영역 */}
@@ -50,7 +83,11 @@ export const Header = () => {
             <>
               <Avatar
                 src={user.user_metadata.avatar_url}
-                sx={{ width: 24, height: 24 }}
+                sx={{
+                  width: isMobile ? 20 : 24,
+                  height: isMobile ? 20 : 24,
+                  cursor: 'pointer',
+                }}
                 onClick={() => setModalOpen(true)}
               />
               {/* 프로필 모달 */}
@@ -62,7 +99,7 @@ export const Header = () => {
             </>
           )}
 
-          {isMobile && <MobileHeaderMenu />}
+          {isMobile && <MobileHeaderMenu isOpen={mobileMenuOpen} onToggle={handleMobileMenuToggle} />}
         </RightWrapper>
       </HeaderContainer>
     </>
@@ -79,21 +116,23 @@ const HeaderContainer = styled.header`
       top: 0;
       left: 0;
       width: 100%;
-      background: black;
+      background: #22242a;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       height: 48px;
       padding: 0 20px;
       z-index: 10;
-      ${media.tablet} {
-        justify-content: space-between;
+
+      ${media.mobile} {
+        padding: 0 16px;
       }
     `;
   }}
 `;
 
 const NavLink = styled(Link)`
-  color: white;
+  color: ${({ theme }) => theme.colors.textOnlyWhite};
   text-decoration: none;
   font-size: 12px;
   display: flex;
@@ -106,26 +145,36 @@ const NavLink = styled(Link)`
   }
 `;
 
-const SubMenuItemList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  color: white;
-  font-size: 13px;
-
-  > h4 {
-    color: gray;
-    margin-bottom: 10px;
-  }
-`;
-
 const RightWrapper = styled.div`
   display: flex;
   gap: 15px;
   align-items: center;
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        gap: 10px;
+      }
+    `;
+  }}
 `;
 
 const CustomButton = styled(Button)`
   &&.MuiButton-colorPrimary {
     font-size: 13px;
+    min-width: auto;
+    padding: 6px 12px;
   }
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        font-size: 11px;
+        padding: 4px 8px;
+        min-width: auto;
+      }
+    `;
+  }}
 `;
