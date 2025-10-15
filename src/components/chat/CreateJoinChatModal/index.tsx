@@ -1,8 +1,9 @@
 import { memo, useEffect, useState } from 'react';
 import DialogComponent from '@/components/common/DialogComponent';
 import { ModalType } from '@/app/chat/chatType';
+import CasinoIcon from '@mui/icons-material/Casino';
 import { Button, TextField } from '@mui/material';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import ProfileSelector from '../ProfileSelector';
 
 interface CreateJoinChatModalProps {
@@ -83,30 +84,33 @@ const CreateJoinChatModal = memo(
           { label: getSubmitButtonText(), onClick: handleSubmit, disabled: !name || !room },
         ]}
       >
-        <TextField
+        <StyledTextField
           margin="dense"
           name="room"
           label="채팅방 이름"
           type="text"
           fullWidth
+          size="small"
           variant="outlined"
           value={room}
           disabled={modalType === ModalType.ROOM_ENTRY}
           onChange={(event) => setRoom(event.target.value)}
         />
         <UserNameField>
-          <TextField
+          <StyledTextField
             margin="dense"
             name="name"
             label="이름"
             type="text"
+            size="small"
             variant="outlined"
             value={name}
             onChange={(event) => setName(event.target.value)}
           />
-          <Button size="small" variant="text" onClick={onClickJoinRoom}>
-            랜덤 생성
-          </Button>
+          <StyledRandomButton size="small" onClick={onClickJoinRoom}>
+            <CasinoIcon />
+            <span>랜덤 생성</span>
+          </StyledRandomButton>
         </UserNameField>
         <ProfileSelector profileId={profileId} onChange={onClickDefaultProfile} />
       </DialogComponent>
@@ -118,8 +122,97 @@ export default CreateJoinChatModal;
 
 const UserNameField = styled.div`
   display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 20px;
-  && .MuiButtonBase-root {
-    letter-spacing: -1px;
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        gap: 6px;
+      }
+    `;
+  }}
+`;
+
+const StyledTextField = styled(TextField)`
+  && {
+    .MuiInputBase-root {
+      height: auto;
+      min-height: 44px;
+      padding-right: 0;
+    }
+
+    .MuiFormLabel-root {
+      font-size: 14px;
+    }
+
+    .MuiInputBase-input {
+      font-size: 16px;
+      padding: 10px 12px;
+    }
+
+    ${({ theme }) => {
+      const { media } = theme;
+      return css`
+        ${media.mobile} {
+          .MuiInputBase-root {
+            min-height: 36px;
+          }
+          .MuiFormLabel-root {
+            font-size: 12px;
+          }
+          .MuiInputBase-input {
+            font-size: 13px;
+            padding: 8px 10px;
+          }
+        }
+      `;
+    }}
+  }
+`;
+
+const StyledRandomButton = styled(Button)`
+  && {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: ${({ theme }) => theme.colors.primary};
+    border: 1px solid ${({ theme }) => theme.colors.borderLineSub};
+    background: ${({ theme }) => theme.colors.backgroundContent};
+    padding: 6px 10px;
+    min-width: auto;
+    border-radius: 9999px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+
+    &:hover {
+      opacity: 0.8;
+      transform: translateY(-1px);
+    }
+
+    svg {
+      font-size: 18px;
+    }
+
+    span {
+      font-size: 13px;
+    }
+
+    ${({ theme }) => {
+      const { media } = theme;
+      return css`
+        ${media.mobile} {
+          padding: 4px 8px;
+          svg {
+            font-size: 16px;
+          }
+          span {
+            font-size: 12px;
+          }
+        }
+      `;
+    }}
   }
 `;

@@ -2,6 +2,8 @@
 
 import { isMobile } from 'react-device-detect';
 import { useRouter } from 'next/navigation';
+import { useRecoilValue } from 'recoil';
+import { isDarkThemeState } from '@/recoil/header/atom';
 import { AnimatedText } from '@/components/animatedText/animatedText';
 import { useAnimationInView } from '@/hooks/useAnimationInView';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -12,17 +14,18 @@ import styled, { css } from 'styled-components';
 export const Banner3 = () => {
   const router = useRouter();
   const { ref: textRef, getAnimationProps } = useAnimationInView();
+  const isDark = useRecoilValue(isDarkThemeState);
 
   return (
     <Banner3Container>
-      <TextContent>
+      <TextContent $isDark={isDark}>
         <AnimatedText ref={textRef} getAnimationProps={getAnimationProps}>
           <AnimatedTitle>
             GALLERY MARKETPLACE: {isMobile && <br />} <span>실시간 채팅으로 예술 거래를 새롭게</span>
           </AnimatedTitle>
           <AnimatedSubtitle>"예술 작품을 사고파는 새로운 방식을 경험해보세요."</AnimatedSubtitle>
           <AnimatedDescription>
-            우리 플랫폼은 아티스트와 직접 연결되어 <br /> 실시간 채팅을 통해 원활한 소통과 거래를 가능하게 합니다.
+            우리 플랫폼은 아티스트와 직접 연결되어 실시간 채팅을 통해 원활한 소통과 거래를 가능하게 합니다.
             <br />전 세계의 독창적인 작품을 발견하고, 창작자들과 의미 있는 관계를 구축해보세요.
           </AnimatedDescription>
         </AnimatedText>
@@ -30,7 +33,6 @@ export const Banner3 = () => {
         <ChatButtonWrapper>
           <ChatButton
             variant="contained"
-            color="secondary"
             size="small"
             onClick={() => router.push(`/Chats`)}
             startIcon={<ArrowForwardIcon />}
@@ -64,8 +66,8 @@ const Banner3Container = styled.div`
   }}
 `;
 
-const TextContent = styled.div`
-  ${({ theme }) => {
+const TextContent = styled.div<{ $isDark: boolean }>`
+  ${({ theme, $isDark }) => {
     const { colors, media } = theme;
     return css`
       width: 100%;
@@ -75,8 +77,10 @@ const TextContent = styled.div`
       justify-content: center;
       align-items: center;
       line-height: 1.5;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      padding: 20px;
+      background: ${$isDark
+        ? 'linear-gradient(135deg, #222432 0%, #515273 100%)'
+        : 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'};
+      padding: 30px;
       ${media.tablet} {
         width: 100%;
         height: 500px;
@@ -88,7 +92,7 @@ const TextContent = styled.div`
 `;
 
 const AnimatedTitle = styled(motion.h1)`
-  color: #2a2a2a;
+  color: ${({ theme }) => theme.colors.textTxt100Strong};
   font-size: 22px;
   font-weight: bold;
   & span {
@@ -106,12 +110,15 @@ const AnimatedSubtitle = styled(motion.p)`
       position: relative;
       padding: 20px 0px;
       color: transparent;
-      background: linear-gradient(135deg, #f9d423, #e0aaff, #b09adb, #9c89b8, #cfc4e0);
+
+      color: ${colors.textTxt100Strong};
+      /* background: linear-gradient(135deg, #f9d423, #e0aaff, #b09adb, #9c89b8, #cfc4e0); */
       background-clip: text;
       -webkit-background-clip: text;
       border: 2px solid transparent;
       background-size: 300% 300%;
       animation: gradientAnimation 7s ease infinite;
+      word-break: keep-all;
 
       @keyframes gradientAnimation {
         0% {
@@ -135,10 +142,10 @@ const AnimatedDescription = styled(motion.p)`
   ${({ theme }) => {
     const { colors, media } = theme;
     return css`
-      color: #2a2a2a;
+      color: ${colors.textTxt70};
       font-size: 18px;
-      text-align: right;
       line-height: 1.5;
+      word-break: keep-all;
       ${media.tablet} {
         text-align: center;
         font-size: 16px;
@@ -178,16 +185,21 @@ const Video = styled.video`
   ${({ theme }) => {
     const { colors, media } = theme;
     return css`
-      width: 450px;
+      width: 100%;
       height: auto;
       position: absolute;
       top: 53%;
       left: 52%;
       transform: translate(-50%, -50%);
+      max-width: 500px;
+      min-width: 300px;
+
       ${media.tablet} {
-        width: 390px;
+        width: 50%;
         left: 51%;
         top: 40%;
+        max-width: 390px;
+        min-width: 250px;
       }
     `;
   }}
@@ -196,17 +208,22 @@ const ChatButtonWrapper = styled.div`
   margin-top: 50px;
 `;
 
-const ChatButton = styled(Button)`
-  && {
-    color: #2a2a2a;
-    font-weight: bold;
-    padding: 4px 16px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+const ChatButton = styled(Button)(({ theme }) => {
+  const { colors } = theme;
+  return css`
+    && {
+      background-color: ${colors.primary};
+      transition: all 0.2s;
+      color: ${colors.textOnlyWhite};
+      font-weight: bold;
+      padding: 4px 16px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
-    &:hover {
-      background-color: #b5c6e1;
+      &:hover {
+        opacity: 0.8;
+      }
     }
-  }
-`;
+  `;
+});
 
 export default Banner3;

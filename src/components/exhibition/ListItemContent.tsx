@@ -4,8 +4,6 @@ import { Box, Divider, Typography } from '@mui/material';
 import styled, { css } from 'styled-components';
 
 const ListItemContent = ({ item }) => {
-  const [isLoading, setIsLoading] = useState(true);
-
   return (
     <ListItem key={item.id}>
       <Content>

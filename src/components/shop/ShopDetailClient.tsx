@@ -87,7 +87,7 @@ function ShopDetailClient() {
               <Divider orientation="vertical" flexItem style={{ background: '#fff' }} />
               <Content>
                 {colors && colors.length > 0 && <ColorShowcase colors={colors} />}
-                <Button
+                <StyledButton
                   onClick={() => setIsShowModal(true)}
                   size="large"
                   fullWidth
@@ -95,7 +95,7 @@ function ShopDetailClient() {
                   color="secondary"
                 >
                   360도 이미지 보기
-                </Button>
+                </StyledButton>
                 <Box
                   sx={{
                     width: '240px',
@@ -105,23 +105,23 @@ function ShopDetailClient() {
                     gap: '4px',
                   }}
                 >
-                  <Button
+                  <StyledButton
                     variant="outlined"
                     color="secondary"
                     endIcon={<HelpOutlineOutlinedIcon />}
                     onClick={handleNavigateToPurchaseInquiry}
                   >
                     구매문의
-                  </Button>
+                  </StyledButton>
                   <Divider orientation="vertical" flexItem style={{ background: '#fff' }} />
-                  <Button
+                  <StyledButton
                     variant="outlined"
                     color="secondary"
                     endIcon={<ThumbUpAltOutlinedIcon />}
                     onClick={handleFavoritesAdd}
                   >
                     즐겨찾기
-                  </Button>
+                  </StyledButton>
                 </Box>
               </Content>
             </Contents>
@@ -252,3 +252,14 @@ const Content = styled.div`
     `;
   }}
 `;
+
+const StyledButton = styled(Button)(({ theme }) => {
+  const { colors } = theme;
+  return css`
+    background-color: ${colors.primary};
+    transition: all 0.2s;
+    color: ${colors.textOnlyWhite};
+    font-weight: bold;
+    padding: 4px 16px;
+  `;
+});
