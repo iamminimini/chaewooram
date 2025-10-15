@@ -112,6 +112,7 @@ const AnimatedSubtitle = styled(motion.p)`
       border: 2px solid transparent;
       background-size: 300% 300%;
       animation: gradientAnimation 7s ease infinite;
+      word-break: keep-all;
 
       @keyframes gradientAnimation {
         0% {
@@ -139,6 +140,7 @@ const AnimatedDescription = styled(motion.p)`
       font-size: 18px;
       text-align: right;
       line-height: 1.5;
+      word-break: keep-all;
       ${media.tablet} {
         text-align: center;
         font-size: 16px;
@@ -178,16 +180,21 @@ const Video = styled.video`
   ${({ theme }) => {
     const { colors, media } = theme;
     return css`
-      width: 450px;
+      width: 100%;
       height: auto;
       position: absolute;
       top: 53%;
       left: 52%;
       transform: translate(-50%, -50%);
+      max-width: 500px;
+      min-width: 300px;
+
       ${media.tablet} {
-        width: 390px;
+        width: 50%;
         left: 51%;
         top: 40%;
+        max-width: 390px;
+        min-width: 250px;
       }
     `;
   }}

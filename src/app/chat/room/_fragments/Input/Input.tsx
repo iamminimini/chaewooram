@@ -92,7 +92,7 @@ const Input = ({ setMessage, sendMessage, message, setFile }: any) => {
             </Style.RemoveButton>
           </Style.ImagePreviewBox>
         )}
-        <Style.SendButton onClick={handleSendMessage} size="large" variant={'contained'}>
+        <Style.SendButton onClick={handleSendMessage}>
           <SendIcon />
         </Style.SendButton>
       </Style.InputWrapper>

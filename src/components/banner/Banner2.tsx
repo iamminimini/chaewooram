@@ -49,7 +49,7 @@ export const Banner2 = () => {
 };
 
 const Banner2Container = styled.div`
-  padding: 80px 0px;
+  padding: 80px 20px;
   font-weight: bold;
   color: #2a2a2a;
 `;
@@ -83,6 +83,7 @@ const AnimatedSubtitle = styled(motion.p)`
       border: 2px solid transparent;
       background-size: 300% 300%;
       animation: gradientAnimation 7s ease infinite;
+      word-break: keep-all;
 
       @keyframes gradientAnimation {
         0% {

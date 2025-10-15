@@ -41,7 +41,7 @@ export const Banner1 = () => {
     <Container>
       <AnimatedText ref={textRef} getAnimationProps={getAnimationProps}>
         <TitleWrapper>
-          <AnimatedImage src={'/images/text_logo.png'} alt={'chaewooram logo image'} width={300} height={40} />
+          {/* <AnimatedImage src={'/images/text_logo.png'} alt={'chaewooram logo image'} width={300} height={40} /> */}
           <AnimatedTitle>채우람에서 예술과 함께하는 순간을 경험하세요</AnimatedTitle>
         </TitleWrapper>
       </AnimatedText>
@@ -95,9 +95,10 @@ const AnimatedTitle = styled(motion.h1)`
     const { colors, media } = theme;
     return css`
       color: #2a2a2a;
-      font-size: 30px;
+      font-size: 40px;
       font-weight: bold;
       text-align: center;
+      margin-bottom: 60px;
       ${media.tablet} {
         font-size: 26px;
         line-height: 1.5;

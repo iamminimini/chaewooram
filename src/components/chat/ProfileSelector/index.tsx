@@ -74,28 +74,53 @@ const AvatarWrapper = styled.div<{ $isActive: boolean; $isNew?: boolean }>`
       width: 160px;
       height: 160px;
       border-radius: 50%;
-      border: 5px solid ${$isActive ? 'skyblue' : '#eee'};
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #fff;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #f7f7f7);
+      border: 3px solid ${$isActive ? '#7cc4ff' : '#eee'};
+      box-shadow: ${$isActive ? '0 8px 20px rgba(0, 120, 255, 0.25)' : '0 6px 16px rgba(0, 0, 0, 0.06)'};
       overflow: hidden;
+      cursor: pointer;
+      transition:
+        box-shadow 0.2s ease,
+        transform 0.12s ease,
+        border-color 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: ${$isActive ? '0 10px 24px rgba(0, 120, 255, 0.3)' : '0 10px 24px rgba(0, 0, 0, 0.08)'};
+        border-color: ${$isActive ? '#5bb7ff' : '#e3e3e3'};
+      }
+
+      /* 활성 표시 링 */
+      &::before {
+        content: '';
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        pointer-events: none;
+        border: ${$isActive ? '2px solid rgba(41, 121, 255, 0.35)' : '2px solid transparent'};
+        filter: ${$isActive ? 'blur(0.2px)' : 'none'};
+      }
 
       ${$isNew &&
       css`
-        &:after {
-          content: 'NEW!';
+        &::after {
+          content: 'NEW';
           position: absolute;
-          top: 10px;
-          right: 26px;
-          background-color: ${$isActive ? 'green' : 'red'};
+          top: 8px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: linear-gradient(135deg, #ff6b6b, #ff9f43);
           color: #fff;
-          border: 2px solid #fff;
-          border-radius: 12px;
-          padding: 5px;
-          font-size: 12px;
-          font-weight: bold;
+          border-radius: 9999px;
+          padding: 4px 8px;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.2px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 
           ${media.tablet} {
             display: none;
@@ -106,6 +131,8 @@ const AvatarWrapper = styled.div<{ $isActive: boolean; $isNew?: boolean }>`
       ${media.tablet} {
         width: 85px;
         height: 85px;
+        border-width: 2px;
+        box-shadow: ${$isActive ? '0 6px 16px rgba(0, 120, 255, 0.22)' : '0 4px 12px rgba(0, 0, 0, 0.06)'};
       }
     `;
   }}
@@ -113,16 +140,22 @@ const AvatarWrapper = styled.div<{ $isActive: boolean; $isNew?: boolean }>`
 
 const StyledAvatar = styled(motion.img)`
   ${({ theme }) => {
-    const { colors, media } = theme;
+    const { media } = theme;
     return css`
       width: 150px;
       height: 150px;
       object-fit: cover;
-      border-radius: 50%; /* Ensure the image is also rounded */
+      border-radius: 50%;
+      transition: transform 0.2s ease;
 
       ${media.tablet} {
         width: 75px;
         height: 75px;
+      }
+
+      /* 부모 호버 시 살짝 확대 */
+      ${AvatarWrapper}:hover & {
+        transform: scale(1.03);
       }
     `;
   }}

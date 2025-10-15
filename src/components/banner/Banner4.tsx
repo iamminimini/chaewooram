@@ -108,6 +108,7 @@ const AnimatedSubtitle = styled(motion.p)`
       border: 2px solid transparent;
       background-size: 300% 300%;
       animation: gradientAnimation 7s ease infinite;
+      word-break: keep-all;
 
       @keyframes gradientAnimation {
         0% {
@@ -134,6 +135,7 @@ const AnimatedDescription = styled(motion.p)`
     return css`
       font-size: 18px;
       margin-bottom: 40px;
+      word-break: keep-all;
       ${media.tablet} {
         text-align: center;
         font-size: 16px;

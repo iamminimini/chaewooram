@@ -1,6 +1,6 @@
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Button, IconButton, TextField } from '@mui/material';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface StyledTextFieldProps {
   $hasImageFile: boolean;
@@ -8,25 +8,66 @@ interface StyledTextFieldProps {
 
 export const Container = styled.div`
   display: flex;
-  align-items: center;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 20px;
-  gap: 10px;
-  border: 1px solid #e0e0e0;
+  padding: 16px;
+  gap: 12px;
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        padding: 12px;
+        gap: 8px;
+      }
+    `;
+  }}
 `;
 
 export const MediaPicker = styled.div`
   display: flex;
+  gap: 8px;
+  align-items: center;
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        gap: 4px;
+      }
+    `;
+  }}
 `;
 
 export const InputWrapper = styled.form`
   width: 100%;
   position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-end;
+  gap: 12px;
+  background: #f8f9fa;
+  border-radius: 24px;
+  padding: 8px;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+
+  &:focus-within {
+    border-color: #2979ff;
+    background: #fff;
+  }
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        gap: 8px;
+        padding: 6px;
+        border-radius: 20px;
+      }
+    `;
+  }}
 `;
 
 export const InputField = styled.input`
@@ -43,54 +84,203 @@ export const InputField = styled.input`
 `;
 
 export const SendButton = styled(Button)`
-  background: #2979ff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  white-space: pre;
-  height: 100%;
-  &:hover {
-    background: #2962ff; /* 호버 시 배경색 */
+  && {
+    background: #2979ff !important;
+    color: white !important;
+    border: none !important;
+    cursor: pointer;
+    font-size: 16px;
+    white-space: nowrap;
+    min-width: 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 8px rgba(41, 121, 255, 0.3);
+    transition: all 0.2s ease;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    &:hover {
+      background: #2962ff !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(41, 121, 255, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+      background: #1e53e5 !important;
+    }
+
+    .MuiButton-root {
+      min-width: auto !important;
+      padding: 0 !important;
+    }
+
+    ${({ theme }) => {
+      const { media } = theme;
+      return css`
+        ${media.mobile} {
+          min-width: 40px !important;
+          width: 40px !important;
+          height: 40px !important;
+          font-size: 14px;
+        }
+      `;
+    }}
   }
 `;
 
 export const StyledFileIcon = styled(AttachFileIcon)`
-  color: #333;
+  color: #666;
   transform: rotate(35deg);
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #2979ff;
+  }
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        font-size: 20px;
+      }
+    `;
+  }}
 `;
 
 export const StyledTextField = styled(TextField)<StyledTextFieldProps>`
-  & .MuiInputBase-root {
-    height: ${({ $hasImageFile }) => ($hasImageFile ? '200px' : '120px')};
-    align-items: flex-start;
+  && {
+    flex: 1;
+
+    .MuiInputBase-root {
+      height: ${({ $hasImageFile }) => ($hasImageFile ? '160px' : 'auto')};
+      min-height: 40px;
+      max-height: 120px;
+      align-items: flex-start;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 8px 12px;
+
+      &:hover {
+        background: transparent;
+      }
+
+      &.Mui-focused {
+        background: transparent;
+      }
+    }
+
+    .MuiInputBase-input {
+      font-size: 16px;
+      line-height: 1.4;
+      padding: 0;
+
+      &::placeholder {
+        color: #999;
+        opacity: 1;
+      }
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+      border: none;
+    }
+
+    ${({ theme }) => {
+      const { media } = theme;
+      return css`
+        ${media.mobile} {
+          .MuiInputBase-root {
+            min-height: 36px;
+            max-height: 100px;
+            padding: 6px 10px;
+          }
+
+          .MuiInputBase-input {
+            font-size: 14px;
+          }
+        }
+      `;
+    }}
   }
 `;
 
 export const ImagePreviewBox = styled.div`
-  height: 100px;
-  padding: 20px;
   position: absolute;
-  bottom: 0;
+  bottom: 100%;
   left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  gap: 12px;
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        padding: 8px;
+        gap: 8px;
+        border-radius: 8px;
+      }
+    `;
+  }}
 `;
 
 export const ImagePreview = styled.img`
   width: 60px;
   height: 60px;
-  position: relative;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+
+  ${({ theme }) => {
+    const { media } = theme;
+    return css`
+      ${media.mobile} {
+        width: 50px;
+        height: 50px;
+        border-radius: 6px;
+      }
+    `;
+  }}
 `;
 
 export const RemoveButton = styled(IconButton)`
-  color: #333;
-  position: relative;
-  left: -10px;
-  svg {
-    font-size: 16px;
-  }
-  &:hover {
-    background: #111;
+  && {
+    color: #666;
+    background: rgba(0, 0, 0, 0.05);
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+
+    svg {
+      font-size: 16px;
+    }
+
+    &:hover {
+      background: rgba(255, 0, 0, 0.1);
+      color: #ff4444;
+    }
+
+    ${({ theme }) => {
+      const { media } = theme;
+      return css`
+        ${media.mobile} {
+          width: 24px;
+          height: 24px;
+
+          svg {
+            font-size: 14px;
+          }
+        }
+      `;
+    }}
   }
 `;
